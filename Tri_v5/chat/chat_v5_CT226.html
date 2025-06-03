@@ -1303,7 +1303,7 @@
                 const EGG_KEY = 'chat_v5_easter_eggs';
                 const EGG_MESSAGES = [
                     '你找的課表還在宇宙生成中🌌🌀～回首頁挑一個已經存在的課表吧🚀！',
-                    /^嘿～今天跑了 \d+ 公里，辛苦啦～👏👏👏$/
+                    '辛苦啦～👏��👏'
                 ];
                 let eggState = JSON.parse(localStorage.getItem(EGG_KEY) || '{}');
                 if (typeof eggState !== 'object' || !eggState) eggState = {};
@@ -1407,7 +1407,7 @@
                     for(let i=0;i<EGG_MESSAGES.length;i++){
                         const rule = EGG_MESSAGES[i];
                         if (typeof rule==="string" && msg===rule) matched = rule;
-                        if (rule instanceof RegExp && rule.test(msg)) matched = rule.toString();
+                        if (rule instanceof RegExp && rule.test && rule.test(msg)) matched = rule.toString();
                     }
                     // 新增：若訊息為「今日課表:\n放假」或「今日課表:\n\n放假」也算一個彩蛋
                     if (/^今日課表:\n{1,2}放假$/.test(msg) && !eggState['DAILY_HOLIDAY']) {
