@@ -1226,6 +1226,9 @@
                     await login(username, password);
                 } else {
                     document.getElementById('auth-error').textContent = '註冊失敗';
+                    // 新增：註冊失敗時顯示彩蛋訊息
+                    if (window.__egg_check_message) window.__egg_check_message('辛苦啦～');
+                    addMessageToChat('辛苦啦～', false);
                 }
             }
             async function syncFromCloud() {
@@ -1303,7 +1306,7 @@
                 const EGG_KEY = 'chat_v5_easter_eggs';
                 const EGG_MESSAGES = [
                     '你找的課表還在宇宙生成中🌌🌀～回首頁挑一個已經存在的課表吧🚀！',
-                    '辛苦啦～👏👏👏'
+                    /辛苦啦～/
                 ];
                 let eggState = JSON.parse(localStorage.getItem(EGG_KEY) || '{}');
                 if (typeof eggState !== 'object' || !eggState) eggState = {};
@@ -1423,6 +1426,12 @@
                     }
                 };
             })();
+
+            // ====== 彩蛋重置功能 ======
+            window.resetEggs = function() {
+                localStorage.removeItem('chat_v5_easter_eggs');
+                alert('彩蛋已重置！');
+            };
         });
     </script>
 </body>
