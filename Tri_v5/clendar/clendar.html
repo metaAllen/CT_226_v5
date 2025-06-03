@@ -666,6 +666,9 @@
         } else {
           localStorage.setItem('calendarEvents', JSON.stringify(events));
         }
+        if (localStorage.getItem('token') && typeof syncToCloud === 'function') {
+          syncToCloud();
+        }
         modal.classList.add('hidden');
         renderCalendar();
       }
@@ -681,6 +684,9 @@
           localStorage.setItem(`calendarEvents_${currentUser}`, JSON.stringify(events));
         } else {
           localStorage.setItem('calendarEvents', JSON.stringify(events));
+        }
+        if (localStorage.getItem('token') && typeof syncToCloud === 'function') {
+          syncToCloud();
         }
         modal.classList.add('hidden');
         renderCalendar();
@@ -704,7 +710,7 @@
       // Garmin 同步功能
       syncGarmin.addEventListener('click', async () => {
         try {
-          alert('此功能需要實作 Garmin API 整合');
+          alert('哎呀～這功能需要 Garmin API 魔法生成的啦🧙‍♂️✨');
         } catch (error) {
           alert('同步失敗: ' + error.message);
         }
@@ -809,6 +815,7 @@
             } else {
               localStorage.setItem('calendarEvents', JSON.stringify(calendarEvents));
             }
+            if (localStorage.getItem('token') && typeof syncToCloud === 'function') syncToCloud();
             renderCalendar();
             modal.remove();
           };
@@ -836,6 +843,7 @@
             } else {
               localStorage.setItem('calendarEvents', JSON.stringify(calendarEvents));
             }
+            if (localStorage.getItem('token') && typeof syncToCloud === 'function') syncToCloud();
             renderCalendar();
             modal.remove();
           };
@@ -843,6 +851,12 @@
         // 關閉
         modal.querySelector('#closeEventEditModal').onclick = () => modal.remove();
         modal.onclick = (e) => { if (e.target === modal) modal.remove(); };
+      }
+
+      if (localStorage.getItem('token') && typeof syncFromCloud === 'function') {
+        setInterval(() => {
+          syncFromCloud();
+        }, 10000); // 每 10 秒自動同步一次
       }
     });
   </script>

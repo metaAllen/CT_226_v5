@@ -416,7 +416,7 @@
             async function syncFromCloud() {
                 const token = localStorage.getItem('token');
                 if (!token) return;
-                const res = await fetch('http://localhost:3001/api/data', {
+                const res = await fetch(`${window.location.origin}/api/data`, {
                     headers: { 'Authorization': 'Bearer ' + token }
                 });
                 const { data } = await res.json();
@@ -424,6 +424,10 @@
                     Object.keys(data).forEach(key => {
                         localStorage.setItem(key, JSON.stringify(data[key]));
                     });
+                    // 若雲端沒有 trainingGoals，則本地也清空
+                    if (!data.trainingGoals) {
+                        localStorage.removeItem('trainingGoals');
+                    }
                 }
             }
             async function syncToCloud() {
@@ -432,7 +436,7 @@
                 const currentUser = localStorage.getItem('currentUser');
                 const calendarEvents = JSON.parse(localStorage.getItem(`calendarEvents_${currentUser}`) || '{}');
                 const schedules = JSON.parse(localStorage.getItem('schedules') || '[]');
-                await fetch('http://localhost:3001/api/data', {
+                await fetch(`${window.location.origin}/api/data`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -452,13 +456,14 @@
                 const password = document.getElementById('password').value.trim();
                 document.querySelectorAll('.error-message').forEach(el => el.style.display = 'none');
                 // 呼叫後端 API
-                const res = await fetch('http://localhost:3001/api/login', {
+                const res = await fetch(`${window.location.origin}/api/login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username, password })
                 });
                 const data = await res.json();
                 if (data.token) {
+                    if (window.setLastLoginTime) window.setLastLoginTime();
                     localStorage.setItem('token', data.token);
                     localStorage.setItem('currentUser', username);
                     await syncFromCloud();
@@ -482,27 +487,32 @@
                     return;
                 }
                 // 呼叫後端 API
-                const res = await fetch('http://localhost:3001/api/register', {
+                const res = await fetch(`${window.location.origin}/api/register`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username, password })
                 });
                 if (res.ok) {
                     // 自動登入
-                    const loginRes = await fetch('http://localhost:3001/api/login', {
+                    const loginRes = await fetch(`${window.location.origin}/api/login`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ username, password })
                     });
                     const loginData = await loginRes.json();
                     if (loginData.token) {
+                        if (window.setLastLoginTime) window.setLastLoginTime();
                         localStorage.setItem('token', loginData.token);
                         localStorage.setItem('currentUser', username);
                         await syncFromCloud();
                         window.location.href = '../index.html';
+                    } else {
+                        document.getElementById('regUsernameError').textContent = loginData.error || '自動登入失敗';
+                        document.getElementById('regUsernameError').style.display = 'block';
                     }
                 } else {
-                    document.getElementById('regUsernameError').textContent = '註冊失敗';
+                    const errorData = await res.json().catch(() => ({}));
+                    document.getElementById('regUsernameError').textContent = errorData.error || '登愣～註冊失敗👾';
                     document.getElementById('regUsernameError').style.display = 'block';
                 }
             });
@@ -540,6 +550,12 @@
                     button.classList.remove('active');
                 }
             });
+
+            if (localStorage.getItem('token') && typeof syncFromCloud === 'function') {
+                setInterval(() => {
+                    syncFromCloud();
+                }, 10000); // 每 10 秒自動同步一次
+            }
         });
     </script>
 </body>
