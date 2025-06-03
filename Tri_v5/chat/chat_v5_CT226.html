@@ -955,6 +955,15 @@
                 chatBox.scrollTop = chatBox.scrollHeight;
             }
 
+            // 修改 addMessageToChat 以觸發彩蛋（必須在 function 宣告之後）
+            (function(){
+                const _origAddMessageToChat = addMessageToChat;
+                addMessageToChat = function(messageText, isUser) {
+                    if (!isUser && window.__egg_check_message) window.__egg_check_message(messageText);
+                    _origAddMessageToChat.apply(this, arguments);
+                };
+            })();
+
             function saveRunToCalendar(km) {
                 const currentUser = getCurrentUser();
                 const today = new Date();
@@ -1064,7 +1073,7 @@
             dailyScheduleButton.addEventListener('click', () => {
                 const homeStatus = getHomeScheduleStatus();
                 if (homeStatus.status === 'not_selected') {
-                    addMessageToChat('欸欸欸～你還沒選課啦！快回首頁挑一張課表，不然我什麼都不能教你哦～', false);
+                    addMessageToChat('嗚嗚～我還沒收到你的課表啦😭 我什麼都不能教你欸～快去首頁選一個課表吧！🙇‍♂️', false);
                     return;
                 } else if (homeStatus.status === 'not_exist') {
                     addMessageToChat('你找的課表還在宇宙生成中🌌🌀～回首頁挑一個已經存在的課表吧🚀！', false);
@@ -1079,7 +1088,7 @@
             weeklyScheduleButton.addEventListener('click', () => {
                 const homeStatus = getHomeScheduleStatus();
                 if (homeStatus.status === 'not_selected') {
-                    addMessageToChat('欸欸欸～你還沒選課啦！快回首頁挑一張課表，不然我什麼都不能教你哦～', false);
+                    addMessageToChat('嗚嗚～我還沒收到你的課表啦😭 我什麼都不能教你欸～快去首頁選一個課表吧！🙇‍♂️', false);
                     return;
                 } else if (homeStatus.status === 'not_exist') {
                     addMessageToChat('你找的課表還在宇宙生成中🌌🌀～回首頁挑一個已經存在的課表吧🚀！', false);
@@ -1095,21 +1104,21 @@
                 expectingSwimResponse = true;
                 expectingCyclingResponse = false;
                 expectingRunningResponse = false;
-                addMessageToChat('您今天游了幾 K呢?', false);
+                addMessageToChat('今天游了幾 K呢?', false);
             });
 
             cyclingButton.addEventListener('click', () => {
                 expectingSwimResponse = false;
                 expectingCyclingResponse = true;
                 expectingRunningResponse = false;
-                addMessageToChat('您今天騎了幾 K呢?', false);
+                addMessageToChat('今天騎了幾 K呢?', false);
             });
 
             runningButton.addEventListener('click', () => {
                 expectingSwimResponse = false;
                 expectingCyclingResponse = false;
                 expectingRunningResponse = true;
-                addMessageToChat('您今天跑了幾 K呢?', false);
+                addMessageToChat('今天跑了幾 K呢?', false);
             });
 
             function handleMessageInput(messageText) {
@@ -1121,7 +1130,7 @@
                         const km = parseFloat(messageText.match(/\d+/)?.[0] || 0);
                         if (km > 0) {
                             saveSwimToCalendar(km);
-                            addMessageToChat(`您今天游了 ${km} 公里，真棒！`, false);
+                            addMessageToChat(`嘿～今天游了 ${km} 公里，辛苦啦～👏👏👏`, false);
                         } else {
                             addMessageToChat('請輸入有效的距離', false);
                         }
@@ -1131,7 +1140,7 @@
                         const km = parseFloat(messageText.match(/\d+/)?.[0] || 0);
                         if (km > 0) {
                             saveBikeToCalendar(km);
-                            addMessageToChat(`您今天騎了 ${km} 公里，真棒！`, false);
+                            addMessageToChat(`嘿～今天騎了 ${km} 公里，辛苦啦～👏👏👏`, false);
                         } else {
                             addMessageToChat('請輸入有效的距離', false);
                         }
@@ -1141,7 +1150,7 @@
                         const km = parseFloat(messageText.match(/\d+/)?.[0] || 0);
                         if (km > 0) {
                             saveRunToCalendar(km);
-                            addMessageToChat(`您今天跑了 ${km} 公里，真棒！`, false);
+                            addMessageToChat(`嘿～今天跑了 ${km} 公里，辛苦啦～👏👏👏`, false);
                         } else {
                             addMessageToChat('請輸入有效的距離', false);
                         }
@@ -1288,6 +1297,138 @@
                 // 你可以在這裡加一個「登入」按鈕，或在會員頁加「登出」功能
                 // 如果想強制用戶登入才用同步功能，可在這裡 showAuthModal()
             });
+
+            // ====== 彩蛋與煙火特效 ======
+            (function(){
+                const EGG_KEY = 'chat_v5_easter_eggs';
+                const EGG_MESSAGES = [
+                    '你找的課表還在宇宙生成中🌌🌀～回首頁挑一個已經存在的課表吧🚀！',
+                    '哎呀～這功能需要 Garmin API 魔法生成的啦🧙‍♂️✨',
+                    '登愣～註冊失敗👾',
+                    /^嘿～今天跑了 \d+ 公里，辛苦啦～👏👏👏$/
+                ];
+                let eggState = JSON.parse(localStorage.getItem(EGG_KEY) || '{}');
+                if (typeof eggState !== 'object' || !eggState) eggState = {};
+                function showFireworksOrRocket(isRocket) {
+                    if (document.getElementById('egg-fireworks-overlay')) return;
+                    const overlay = document.createElement('div');
+                    overlay.id = 'egg-fireworks-overlay';
+                    overlay.style.position = 'fixed';
+                    overlay.style.left = 0;
+                    overlay.style.top = 0;
+                    overlay.style.width = '100vw';
+                    overlay.style.height = '100vh';
+                    overlay.style.zIndex = 99999;
+                    overlay.style.pointerEvents = 'none';
+                    overlay.style.background = 'rgba(0,0,0,0.10)';
+                    overlay.innerHTML = `
+                        <canvas id="egg-fireworks-canvas" style="position:absolute;left:0;top:0;width:100vw;height:100vh;pointer-events:none;"></canvas>
+                        <div id="egg-popup" style="position:absolute;left:50%;top:40%;transform:translate(-50%,-50%);background:rgba(255,255,255,0.97);border-radius:22px;padding:38px 36px 32px 36px;box-shadow:0 8px 32px rgba(0,0,0,0.18);font-size:2rem;color:#222;display:flex;flex-direction:column;align-items:center;gap:18px;">
+                            <div style="font-size:2.5rem;">🥚🎉</div>
+                            <div id="egg-popup-title" style="font-weight:bold;font-size:2rem;">採蛋成功！</div>
+                            <div id="egg-popup-desc" style="font-size:1.2rem;color:#00bcd4;"></div>
+                        </div>
+                        <div id="egg-rocket" style="display:none;position:absolute;left:50%;top:60%;transform:translate(-50%,-50%);font-size:120px;">🚀</div>
+                    `;
+                    document.body.appendChild(overlay);
+                    const canvas = document.getElementById('egg-fireworks-canvas');
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                    // Fireworks animation
+                    let ctx = canvas.getContext('2d');
+                    let particles = [];
+                    function randomColor() {
+                        return `hsl(${Math.random()*360},100%,60%)`;
+                    }
+                    function createFirework() {
+                        const x = Math.random()*canvas.width*0.8+canvas.width*0.1;
+                        const y = Math.random()*canvas.height*0.5+canvas.height*0.1;
+                        const count = 24+Math.floor(Math.random()*12);
+                        for(let i=0;i<count;i++){
+                            const angle = (Math.PI*2)*i/count;
+                            const speed = 2+Math.random()*2;
+                            particles.push({
+                                x,y,
+                                vx: Math.cos(angle)*speed,
+                                vy: Math.sin(angle)*speed,
+                                alpha: 1,
+                                color: randomColor(),
+                                size: 2+Math.random()*2
+                            });
+                        }
+                    }
+                    let fireworkTimer = 0;
+                    function animate() {
+                        ctx.clearRect(0,0,canvas.width,canvas.height);
+                        if (isRocket) {
+                            document.getElementById('egg-rocket').style.display = 'block';
+                            document.getElementById('egg-popup-title').textContent = '彩蛋全收集！';
+                            document.getElementById('egg-popup-desc').textContent = '🚀 火箭升空！';
+                            document.getElementById('egg-popup').style.background = 'rgba(255,255,255,0.98)';
+                        } else {
+                            document.getElementById('egg-rocket').style.display = 'none';
+                            if (fireworkTimer++%10===0) createFirework();
+                        }
+                        particles.forEach(p => {
+                            ctx.globalAlpha = p.alpha;
+                            ctx.beginPath();
+                            ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+                            ctx.fillStyle = p.color;
+                            ctx.fill();
+                            p.x += p.vx;
+                            p.y += p.vy;
+                            p.vx *= 0.96;
+                            p.vy *= 0.96;
+                            p.alpha *= 0.96;
+                        });
+                        particles = particles.filter(p=>p.alpha>0.05);
+                        if (document.getElementById('egg-fireworks-overlay'))
+                            requestAnimationFrame(animate);
+                    }
+                    animate();
+                    setTimeout(()=>{
+                        overlay.remove();
+                        if (isRocket) {
+                            delete eggState.__showRocket;
+                            localStorage.setItem(EGG_KEY, JSON.stringify(eggState));
+                        }
+                    },7000);
+                }
+                // 頁面載入時自動檢查是否集滿5個彩蛋，若有則顯示火箭
+                document.addEventListener('DOMContentLoaded', function() {
+                    let eggState = JSON.parse(localStorage.getItem(EGG_KEY) || '{}');
+                    let count = Object.keys(eggState).filter(k=>k!=="__showRocket").length;
+                    if (count===5 && !eggState.__showRocket) {
+                        eggState.__showRocket = true;
+                        localStorage.setItem(EGG_KEY, JSON.stringify(eggState));
+                        setTimeout(()=>showFireworksOrRocket(true), 300);
+                    }
+                });
+                window.__egg_check_message = function(msg) {
+                    let matched = false;
+                    for(let i=0;i<EGG_MESSAGES.length;i++){
+                        const rule = EGG_MESSAGES[i];
+                        if (typeof rule==="string" && msg===rule) matched = rule;
+                        if (rule instanceof RegExp && rule.test(msg)) matched = rule.toString();
+                    }
+                    // 新增：若訊息為「今日課表:\n放假」或「今日課表:\n\n放假」也算一個彩蛋
+                    if (/^今日課表:\n{1,2}放假$/.test(msg) && !eggState['DAILY_HOLIDAY']) {
+                        matched = 'DAILY_HOLIDAY';
+                    }
+                    if (matched && !eggState[matched]) {
+                        eggState[matched] = 1;
+                        localStorage.setItem(EGG_KEY, JSON.stringify(eggState));
+                        showFireworksOrRocket(false);
+                    }
+                    // 檢查是否集滿5個
+                    let count = Object.keys(eggState).filter(k=>k!=="__showRocket").length;
+                    if (count===5 && !eggState.__showRocket) {
+                        eggState.__showRocket = true;
+                        localStorage.setItem(EGG_KEY, JSON.stringify(eggState));
+                        setTimeout(()=>showFireworksOrRocket(true), 300); // 再秀一次火箭
+                    }
+                };
+            })();
         });
     </script>
 </body>
