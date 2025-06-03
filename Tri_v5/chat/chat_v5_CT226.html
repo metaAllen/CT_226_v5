@@ -1303,8 +1303,6 @@
                 const EGG_KEY = 'chat_v5_easter_eggs';
                 const EGG_MESSAGES = [
                     '你找的課表還在宇宙生成中🌌🌀～回首頁挑一個已經存在的課表吧🚀！',
-                    '哎呀～這功能需要 Garmin API 魔法生成的啦🧙‍♂️✨',
-                    '登愣～註冊失敗👾',
                     /^嘿～今天跑了 \d+ 公里，辛苦啦～👏👏👏$/
                 ];
                 let eggState = JSON.parse(localStorage.getItem(EGG_KEY) || '{}');
@@ -1394,11 +1392,11 @@
                         }
                     },7000);
                 }
-                // 頁面載入時自動檢查是否集滿5個彩蛋，若有則顯示火箭
+                // 頁面載入時自動檢查是否集滿3個彩蛋，若有則顯示火箭
                 document.addEventListener('DOMContentLoaded', function() {
                     let eggState = JSON.parse(localStorage.getItem(EGG_KEY) || '{}');
                     let count = Object.keys(eggState).filter(k=>k!=="__showRocket").length;
-                    if (count===5 && !eggState.__showRocket) {
+                    if (count===3 && !eggState.__showRocket) {
                         eggState.__showRocket = true;
                         localStorage.setItem(EGG_KEY, JSON.stringify(eggState));
                         setTimeout(()=>showFireworksOrRocket(true), 300);
@@ -1420,9 +1418,9 @@
                         localStorage.setItem(EGG_KEY, JSON.stringify(eggState));
                         showFireworksOrRocket(false);
                     }
-                    // 檢查是否集滿5個
+                    // 檢查是否集滿3個
                     let count = Object.keys(eggState).filter(k=>k!=="__showRocket").length;
-                    if (count===5 && !eggState.__showRocket) {
+                    if (count===3 && !eggState.__showRocket) {
                         eggState.__showRocket = true;
                         localStorage.setItem(EGG_KEY, JSON.stringify(eggState));
                         setTimeout(()=>showFireworksOrRocket(true), 300); // 再秀一次火箭
