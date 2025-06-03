@@ -416,28 +416,8 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const chatBox = document.getElementById('chat-box');
-            const CT_226_schedules = [
+            const schedule_226 = [
                 // 第1週
-                {
-                    'Monday': '放假',
-                    'Tuesday': '游3K',
-                    'Wednesday': '訓練台90分',
-                    'Thursday': '跑12 K',
-                    'Friday': '游2.5K',
-                    'Saturday': '水月公園團騎90 K',
-                    'Sunday': '水月公園團騎90 K'
-                },
-                // 第2週
-                {
-                    'Monday': '放假',
-                    'Tuesday': '游2.5K',
-                    'Wednesday': '訓練台60分',
-                    'Thursday': '跑12 K',
-                    'Friday': '游2.5K',
-                    'Saturday': '水月公園團騎85K，再跑3 K。',
-                    'Sunday': '水月公園團騎85K，再跑3 K。'
-                },
-                // 第3週
                 {
                     'Monday': '放假',
                     'Tuesday': '游2.5K',
@@ -447,7 +427,7 @@
                     'Saturday': '水月公園團騎85K，再跑3 K。',
                     'Sunday': '跑12 K'
                 },
-                // 第4週
+                // 第2週
                 {
                     'Monday': '放假',
                     'Tuesday': '游2.5K',
@@ -457,7 +437,7 @@
                     'Saturday': '水月公園團騎75K，再跑5K。',
                     'Sunday': '水月公園團騎75K，再跑5K。'
                 },
-                // 第5週
+                // 第3週
                 {
                     'Monday': '放假',
                     'Tuesday': '訓練台60分，再跑3 K。',
@@ -467,7 +447,7 @@
                     'Saturday': '水月公園團騎75K，再跑3K。',
                     'Sunday': '跑15 K'
                 },
-                // 第6週
+                // 第4週
                 {
                     'Monday': '放假',
                     'Tuesday': '放假',
@@ -477,7 +457,7 @@
                     'Saturday': '水月公園團騎75K，再跑3K。',
                     'Sunday': '水月公園團騎75K，再跑3K。'
                 },
-                // 第7週
+                // 第5週
                 {
                     'Monday': '放假',
                     'Tuesday': '放假',
@@ -487,7 +467,7 @@
                     'Saturday': '放假',
                     'Sunday': '水月公園團騎75K，再跑3K。'
                 },
-                // 第8週
+                // 第6週
                 {
                     'Monday': '放假',
                     'Tuesday': '游2.5K',
@@ -497,7 +477,7 @@
                     'Saturday': '水月公園團騎75K，再跑3K。',
                     'Sunday': '水月公園團騎75K，再跑3K。'
                 },
-                // 第9週
+                // 第7週
                 {
                     'Monday': '放假',
                     'Tuesday': '游2.5K',
@@ -507,7 +487,7 @@
                     'Saturday': '水月公園團騎75K，再跑3K。',
                     'Sunday': '跑12 K'
                 },
-                // 第10週
+                // 第8週
                 {
                     'Monday': '放假',
                     'Tuesday': '游2.5K',
@@ -517,7 +497,7 @@
                     'Saturday': '水月公園團騎75K，再跑3K。',
                     'Sunday': '訓練台30分，再跑10K。'
                 },
-                // 第11週
+                // 第9週
                 {
                     'Monday': '放假',
                     'Tuesday': '游2K',
@@ -527,7 +507,7 @@
                     'Saturday': '訓練台30分，再跑10K。',
                     'Sunday': '訓練台30分，再跑10K。'
                 },
-                // 第12週
+                // 第10週
                 {
                     'Monday': '放假',
                     'Tuesday': '游2K',
@@ -537,7 +517,7 @@
                     'Saturday': '水月公園團騎40K，再跑10K。',
                     'Sunday': '跑12 K'
                 },
-                // 第13週
+                // 第11週
                 {
                     'Monday': '放假',
                     'Tuesday': '游2.5K',
@@ -547,7 +527,7 @@
                     'Saturday': '水月公園團騎40K，再跑10K。',
                     'Sunday': '跑12 K'
                 },
-                // 第14週
+                // 第12週
                 {
                     'Monday': '放假',
                     'Tuesday': '游2.5K',
@@ -557,7 +537,7 @@
                     'Saturday': '水月公園團騎70K，再跑5 K。',
                     'Sunday': '跑12 K'
                 },
-                // 第15週
+                // 第13週
                 {
                     'Monday': '放假',
                     'Tuesday': '游1.5K',
@@ -567,7 +547,7 @@
                     'Saturday': '水月公園團騎85K',
                     'Sunday': '跑12 K'
                 },
-                // 第16週
+                // 第14週
                 {
                     'Monday': '放假',
                     'Tuesday': '游3K',
@@ -577,7 +557,7 @@
                     'Saturday': '水月公園團騎85K',
                     'Sunday': '水月公園團騎85K'
                 },
-                // 第17週
+                // 第15週
                 {
                     'Monday': '放假',
                     'Tuesday': '游3K',
@@ -587,7 +567,7 @@
                     'Saturday': '水月公園團騎85K',
                     'Sunday': '跑12 K'
                 },
-                // 第18週
+                // 第16週
                 {
                     'Monday': '放假',
                     'Tuesday': '游3.8K',
@@ -597,7 +577,7 @@
                     'Saturday': '水月公園團騎85K。',
                     'Sunday': '跑15 k'
                 },
-                // 第19週
+                // 第17週
                 {
                     'Monday': '放假',
                     'Tuesday': '游3.8K',
@@ -607,7 +587,7 @@
                     'Saturday': '水月公園團騎85K。',
                     'Sunday': '跑15 k'
                 },
-                // 第20週
+                // 第18週
                 {
                     'Monday': '放假',
                     'Tuesday': '游3.8K',
@@ -617,7 +597,7 @@
                     'Saturday': '訓練台60分，再跑10 K。',
                     'Sunday': '訓練台60分，再跑10 K。'
                 },
-                // 第21週
+                // 第19週
                 {
                     'Monday': '放假',
                     'Tuesday': '游3.8K',
@@ -627,7 +607,7 @@
                     'Saturday': '訓練台60分，再跑10 K。',
                     'Sunday': '訓練台60分，再跑10 K。'
                 },
-                // 第22週
+                // 第20週
                 {
                     'Monday': '放假',
                     'Tuesday': '游3.8K',
@@ -637,7 +617,7 @@
                     'Saturday': '訓練台70分，再跑10 K。',
                     'Sunday': '訓練台70分，再跑10 K。'
                 },
-                // 第23週
+                // 第21週
                 {
                     'Monday': '放假',
                     'Tuesday': '游3.8K',
@@ -647,7 +627,7 @@
                     'Saturday': '跑12 K',
                     'Sunday': '訓練台60分，再跑10 K。'
                 },
-                // 第24週
+                // 第22週
                 {
                     'Monday': '放假',
                     'Tuesday': '游3.8K',
@@ -657,7 +637,7 @@
                     'Saturday': '訓練台60分，再跑10 K。',
                     'Sunday': '訓練台60分，再跑10 K。'
                 },
-                // 第25週
+                // 第23週
                 {
                     'Monday': '放假',
                     'Tuesday': '游3.8K',
@@ -667,9 +647,9 @@
                     'Saturday': '水月公園團騎86 k，再跑5 K。',
                     'Sunday': '水月公園團騎86 k，再跑5 K。'
                 },
-                // 第26週
+                // 第24週
                 {
-                    'Monday': '放假',
+                    'Monday': '放假。',
                     'Tuesday': '游3.8K',
                     'Wednesday': '訓練台90分',
                     'Thursday': '訓練台90分',
@@ -677,7 +657,7 @@
                     'Saturday': '水月公園團騎86 k，再跑5 K。',
                     'Sunday': '水月公園團騎86 k，再跑5 K。'
                 },
-                // 第27週
+                // 第25週
                 {
                     'Monday': '放假',
                     'Tuesday': '游3.8K',
@@ -687,7 +667,7 @@
                     'Saturday': '訓練台90分，再跑6K。',
                     'Sunday': '訓練台90分，再跑6K。'
                 },
-                // 第28週
+                // 第26週
                 {
                     'Monday': '放假',
                     'Tuesday': '游3.8K',
@@ -697,7 +677,7 @@
                     'Saturday': '水月公園團騎86 k，再跑5 K。',
                     'Sunday': '訓練台90分，再跑10 k'
                 },
-                // 第29週
+                // 第27週
                 {
                     'Monday': '放假',
                     'Tuesday': '游3K',
@@ -707,7 +687,7 @@
                     'Saturday': '訓練台90分，再跑6K。',
                     'Sunday': '訓練台90分，再跑6K。'
                 },
-                // 第30週
+                // 第28週
                 {
                     'Monday': '放假',
                     'Tuesday': '訓練台60分',
@@ -717,7 +697,7 @@
                     'Saturday': '水月公園團騎86 k，再跑5 K。',
                     'Sunday': '水月公園團騎86 k，再跑5 K。'
                 },
-                // 第31週
+                // 第29週
                 {
                     'Monday': '放假',
                     'Tuesday': '訓練台60分',
@@ -727,7 +707,7 @@
                     'Saturday': '水月公園團騎86 k，再跑5 K。',
                     'Sunday': '跑15K'
                 },
-                // 第32週
+                // 第30週
                 {
                     'Monday': '放假',
                     'Tuesday': '訓練台60分',
@@ -737,7 +717,7 @@
                     'Saturday': '水月公園團騎86 k，再跑5 K。',
                     'Sunday': '跑18K'
                 },
-                // 第33週
+                // 第31週
                 {
                     'Monday': '放假',
                     'Tuesday': '訓練台90分',
@@ -747,7 +727,7 @@
                     'Saturday': '水月公園團騎86 k，再跑5 K。',
                     'Sunday': '跑18K'
                 },
-                // 第34週
+                // 第32週
                 {
                     'Monday': '放假',
                     'Tuesday': '游3K',
@@ -757,7 +737,7 @@
                     'Saturday': '游3.8K',
                     'Sunday': '水月公園團騎86 k，再跑5 K。'
                 },
-                // 第35週
+                // 第33週
                 {
                     'Monday': '放假',
                     'Tuesday': '游3K',
@@ -767,7 +747,7 @@
                     'Saturday': '水月公園團騎86 k，再跑5 K。',
                     'Sunday': '水月公園團騎86 k，再跑5 K。'
                 },
-                // 第36週
+                // 第34週
                 {
                     'Monday': '游3.8K',
                     'Tuesday': '訓練台60分',
@@ -807,7 +787,7 @@
                 const startDate = new Date(currentDate.getFullYear(), 0, 1);
                 const days = Math.floor((currentDate - startDate) / (24 * 60 * 60 * 1000));
                 const weekNumber = Math.ceil((days + startDate.getDay() + 1) / 7);
-                return (weekNumber - 1) % CT_226_schedules.length;
+                return (weekNumber - 1) % schedule_226.length;
             }
 
             function getTodaySchedule() {
@@ -834,7 +814,7 @@
                     events = JSON.parse(localStorage.getItem('calendarEvents') || '{}');
                 }
                 // 先複製原始課表
-                let schedule = {...CT_226_schedules[currentWeekIndex]};
+                let schedule = {...schedule_226[currentWeekIndex]};
                 // 先標記所有Event當天及前2天
                 let eventDays = [];
                 weekDates.forEach((date, idx) => {
@@ -891,7 +871,7 @@
                     events = JSON.parse(localStorage.getItem('calendarEvents') || '{}');
                 }
                 // 先複製原始課表
-                let schedule = {...CT_226_schedules[currentWeekIndex]};
+                let schedule = {...schedule_226[currentWeekIndex]};
                 // 先標記所有Event當天及前2天
                 let eventDays = [];
                 weekDates.forEach((date, idx) => {
@@ -1048,11 +1028,66 @@
             let expectingCyclingResponse = false;
             let expectingRunningResponse = false;
 
+            function getHomeScheduleStatus() {
+                // 取得首頁課表選擇狀態
+                const type = localStorage.getItem('selectedScheduleType') || '';
+                const distance = localStorage.getItem('selectedScheduleDistance') || '';
+                // 判斷是否為 Challenge Taiwan/226 或 Ironman/113
+                if (!type || !distance) return { status: 'not_selected' };
+                if (
+                    (type === 'Challenge Taiwan' && distance === '226') ||
+                    (type === 'Ironman' && distance === '113')
+                ) {
+                    // 判斷是否倒數中
+                    let raceDate = null;
+                    if (type === 'Challenge Taiwan' && distance === '226') {
+                        raceDate = new Date(2026, 3, 25);
+                    } else if (type === 'Ironman' && distance === '113') {
+                        raceDate = new Date(2025, 10, 2);
+                    }
+                    if (raceDate) {
+                        const startDate = new Date(raceDate);
+                        startDate.setDate(raceDate.getDate() - 236);
+                        const now = new Date();
+                        if (now < startDate) {
+                            const diff = startDate - now;
+                            const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+                            return { status: 'countdown', days };
+                        }
+                    }
+                    return { status: 'normal' };
+                }
+                // 其它課表皆視為無對應內容
+                return { status: 'not_exist' };
+            }
+
             dailyScheduleButton.addEventListener('click', () => {
+                const homeStatus = getHomeScheduleStatus();
+                if (homeStatus.status === 'not_selected') {
+                    addMessageToChat('欸欸欸～你還沒選課啦！快回首頁挑一張課表，不然我什麼都不能教你哦～', false);
+                    return;
+                } else if (homeStatus.status === 'not_exist') {
+                    addMessageToChat('你找的課表還在宇宙生成中🌌🌀～回首頁挑一個已經存在的課表吧🚀！', false);
+                    return;
+                } else if (homeStatus.status === 'countdown') {
+                    addMessageToChat(`距離課表開始還有 ${homeStatus.days} 天！`, false);
+                    return;
+                }
                 addMessageToChat(`今日課表:\n${getTodaySchedule()}`, false);
             });
 
             weeklyScheduleButton.addEventListener('click', () => {
+                const homeStatus = getHomeScheduleStatus();
+                if (homeStatus.status === 'not_selected') {
+                    addMessageToChat('欸欸欸～你還沒選課啦！快回首頁挑一張課表，不然我什麼都不能教你哦～', false);
+                    return;
+                } else if (homeStatus.status === 'not_exist') {
+                    addMessageToChat('你找的課表還在宇宙生成中🌌🌀～回首頁挑一個已經存在的課表吧🚀！', false);
+                    return;
+                } else if (homeStatus.status === 'countdown') {
+                    addMessageToChat(`距離課表開始還有 ${homeStatus.days} 天！`, false);
+                    return;
+                }
                 addMessageToChat(`本週課表:\n${getWeeklySchedule()}`, false);
             });
 

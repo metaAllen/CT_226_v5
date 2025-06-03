@@ -930,7 +930,13 @@
             function renderCountdownInline() {
                 const selectedSchedule = localStorage.getItem('selectedScheduleType') || '';
                 const selectedDistance = localStorage.getItem('selectedScheduleDistance') || '';
+                let raceDate = null;
                 if(selectedSchedule==='Challenge Taiwan' && selectedDistance==='226') {
+                    raceDate = new Date(2026, 3, 25); // 4月是3
+                } else if(selectedSchedule==='Ironman' && selectedDistance==='113') {
+                    raceDate = new Date(2025, 10, 2); // 11月是10
+                }
+                if(raceDate) {
                     countdownInline.style.display = '';
                     updateCountdownInline();
                     if(window.countdownInlineTimer) clearInterval(window.countdownInlineTimer);
@@ -941,23 +947,30 @@
                 }
             }
             function updateCountdownInline() {
+                const selectedSchedule = localStorage.getItem('selectedScheduleType') || '';
+                const selectedDistance = localStorage.getItem('selectedScheduleDistance') || '';
+                let raceDate = null;
+                if(selectedSchedule==='Challenge Taiwan' && selectedDistance==='226') {
+                    raceDate = new Date(2026, 3, 25, 0, 0, 0);
+                } else if(selectedSchedule==='Ironman' && selectedDistance==='113') {
+                    raceDate = new Date(2025, 10, 2, 0, 0, 0);
+                }
+                if(!raceDate) return;
+                // 課表第一天 = 比賽日 - 236天
+                const startDate = new Date(raceDate.getTime() - 236 * 24 * 60 * 60 * 1000);
                 const now = new Date();
-                const year = now.getFullYear();
-                const target = new Date(year, 7, 4, 0, 0, 0); // 8月4日
-                if(now > target) {
-                    countdownInline.innerHTML = '<span style="font-size:22px;color:#00bcd4;font-weight:700;">課表已開始！</span>';
-                    clearInterval(window.countdownInlineTimer);
+                if(now < startDate) {
+                    const diff = startDate - now;
+                    const days = Math.ceil(diff/(1000*60*60*24));
+                    countdownInline.innerHTML = `<span style='font-size:40px;font-weight:900;color:#00bcd4;'>${days}</span><span style='font-size:20px;color:#b0bec5;font-weight:500;'> 天</span><div style='font-size:15px;color:#b0bec5;margin-top:2px;'>距離課表開始</div>`;
                     return;
                 }
-                const diff = target - now;
-                const days = Math.floor(diff/(1000*60*60*24));
-                if(days >= 1) {
-                    countdownInline.innerHTML = `<span style='font-size:40px;font-weight:900;color:#00bcd4;'>${days}</span><span style='font-size:20px;color:#b0bec5;font-weight:500;'> 天</span><div style='font-size:15px;color:#b0bec5;margin-top:2px;'>距離課表開始</div>`;
-                } else {
-                    const hours = Math.floor((diff/(1000*60*60))%24);
-                    const mins = Math.floor((diff/(1000*60))%60);
-                    countdownInline.innerHTML = `<span style='font-size:32px;font-weight:900;color:#00bcd4;'>${hours}</span><span style='font-size:18px;color:#b0bec5;font-weight:500;'> 小時 </span><span style='font-size:32px;font-weight:900;color:#00bcd4;'>${mins}</span><span style='font-size:18px;color:#b0bec5;font-weight:500;'> 分鐘</span><div style='font-size:15px;color:#b0bec5;margin-top:2px;'>距離課表開始</div>`;
-                }
+                // 課表已開始，顯示本週課表進度
+                const scheduleLen = 34; // schedule_226長度
+                const daysSinceStart = Math.floor((now - startDate)/(1000*60*60*24));
+                let weekIdx = Math.floor(daysSinceStart/7);
+                if(weekIdx >= scheduleLen) weekIdx = scheduleLen-1;
+                countdownInline.innerHTML = `<span style='font-size:22px;color:#00bcd4;font-weight:700;'>課表已開始！</span><div style='font-size:16px;color:#b0bec5;margin-top:6px;'>目前進度：第${weekIdx+1}週</div>`;
             }
             renderCurrentSchedule();
         });
