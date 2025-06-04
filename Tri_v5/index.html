@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>首頁 - 三項都會累</title>
+    <title>主頁 - 三項都會累</title>
     <style>
         html, body {
             height: 100%;
@@ -154,7 +154,16 @@
             text-align: center;
             position: relative;
         }
-        .nav-button.active {
+        .nav-button span {
+            position: absolute;
+            bottom: 8px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: #fff;
+        }
+        .nav-button:hover span,
+        .nav-button.active span {
             color: #00bcd4;
         }
         .nav-button img {
@@ -187,18 +196,6 @@
             box-shadow: 0 6px 16px rgba(0,188,212,0.4),
                         inset 0 -2px 6px rgba(0,0,0,0.2),
                         inset 0 2px 6px rgba(255,255,255,0.2);
-        }
-        .nav-button span {
-            position: absolute;
-            bottom: 8px;
-            left: 0;
-            right: 0;
-            text-align: center;
-            color: #fff;
-        }
-        .nav-button:hover span,
-        .nav-button.active span {
-            color: #00bcd4;
         }
         .nav-button[href*="chat"] span {
             font-weight: 600;
@@ -351,29 +348,29 @@
 </head>
 <body>
     <div class="container">
-        <div class="header">三項都會累</div>
+        <div class="header">主頁</div>
         <div class="content">
             <div class="card">
                 <h2>今日課表</h2>
                 <p id="todayTraining">載入中...</p>
             </div>
             <div class="card">
-                <h2>選擇課表</h2>
+                <h2>目前課表</h2>
                 <div class="goal-card" style="margin-bottom:0;">
-                    <button id="addScheduleBtn" style="background:#00bcd4;color:#fff;border:none;padding:10px 0;border-radius:14px;cursor:pointer;width:100%;font-size:16px;font-weight:600;box-shadow:0 2px 8px rgba(0,188,212,0.08);transition:background 0.2s;">新增課表</button>
+                    <button id="addScheduleBtn" style="background:#00bcd4;color:#fff;border:none;padding:10px 0;border-radius:14px;cursor:pointer;width:100%;font-size:16px;font-weight:600;box-shadow:0 2px 8px rgba(0,188,212,0.08);transition:background 0.2s;">選擇課表</button>
                     <div id="currentScheduleDiv" style="color:#b0bec5;font-size:15px;line-height:1.6;margin-top:10px;text-align:center;"></div>
                     <div id="countdownInline" style="font-size:32px;color:#00bcd4;font-weight:900;margin-top:18px;display:none;text-align:center;line-height:1.2;"></div>
                 </div>
             </div>
             <div class="card">
-                <h2>目標賽事</h2>
+                <h2>參加賽事</h2>
+                <button id="addGoalBtn" style="background:#00bcd4;color:#fff;border:none;padding:10px 0;border-radius:14px;cursor:pointer;width:100%;font-size:16px;font-weight:600;box-shadow:0 2px 8px rgba(0,188,212,0.08);transition:background 0.2s;margin-bottom:12px;">新增賽事</button>
                 <div id="goalsList">載入中...</div>
-                <button id="addGoalBtn" style="margin-top:12px;background:#00bcd4;color:#fff;border:none;padding:8px 16px;border-radius:8px;cursor:pointer;">新增目標</button>
             </div>
             <!-- 目標編輯表單彈窗 -->
             <div id="goalModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.4);z-index:3000;justify-content:center;align-items:center;transition:opacity 0.2s;opacity:0;">
                 <form id="goalForm" style="background:#222831;padding:24px 20px;border-radius:14px;min-width:260px;max-width:90vw;box-shadow:0 4px 24px rgba(0,0,0,0.18);display:flex;flex-direction:column;gap:12px;position:relative;">
-                    <h3 style="color:#00bcd4;margin:0 0 8px 0;">目標賽事</h3>
+                    <h3 style="color:#00bcd4;margin:0 0 8px 0;">賽事</h3>
                     <div id="goalError" style="color:#ff5252;font-size:14px;min-height:18px;margin-bottom:2px;"></div>
                     <input id="goalName" placeholder="賽事名稱" required style="padding:8px;border-radius:6px;border:1px solid #444;background:#333;color:#fff;" />
                     <input id="goalDate" type="date" required style="padding:8px;border-radius:6px;border:1px solid #444;background:#333;color:#fff;" />
@@ -392,10 +389,10 @@
                     </div>
                 </form>
             </div>
-            <!-- 新增課表 Modal -->
+            <!-- 選擇課表 Modal -->
             <div id="scheduleModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.4);z-index:3000;justify-content:center;align-items:center;transition:opacity 0.2s;opacity:0;">
                 <form id="scheduleForm" style="background:#23272f;padding:32px 22px 22px 22px;border-radius:20px;min-width:260px;max-width:96vw;box-shadow:0 6px 32px rgba(0,188,212,0.10);display:flex;flex-direction:column;gap:18px;">
-                    <h3 style="color:#00bcd4;margin:0 0 8px 0;">新增課表</h3>
+                    <h3 style="color:#00bcd4;margin:0 0 8px 0;">課表</h3>
                     <div id="scheduleError" style="color:#ff5252;font-size:14px;min-height:18px;margin-bottom:2px;"></div>
                     <div>
                         <label for="modalScheduleTypeSelect" style="color:#b0bec5;font-size:15px;">選擇課表</label>
@@ -403,16 +400,12 @@
                             <option value="">請選擇課表</option>
                             <option value="Challenge Taiwan">Challenge Taiwan</option>
                             <option value="Ironman">Ironman</option>
-                            <option value="其他">其他</option>
                         </select>
                     </div>
                     <div>
                         <label for="modalDistanceSelect" style="color:#b0bec5;font-size:15px;">選擇距離</label>
                         <select id="modalDistanceSelect" style="width:100%;padding:8px;border-radius:10px;border:1px solid #444;background:#333;color:#fff;margin-top:6px;">
                             <option value="">請選擇距離</option>
-                            <option value="226">226</option>
-                            <option value="113">113</option>
-                            <option value="51.5">51.5</option>
                         </select>
                     </div>
                     <div style="display:flex;gap:10px;justify-content:flex-end;">
@@ -424,8 +417,8 @@
         </div>
         <div class="nav-buttons">
             <a href="index.html" class="nav-button">
-                <img src="images/home.svg" alt="首頁">
-                <span>首頁</span>
+                <img src="images/home.svg" alt="主頁">
+                <span>主頁</span>
             </a>
             <a href="stats.html" class="nav-button">
                 <img src="images/stats.svg" alt="統計">
@@ -524,6 +517,26 @@
 
             // ====== 原本的今日課表與統計 ======
             function getTodayTraining() {
+                // 取得目前選擇的課表與距離
+                const type = localStorage.getItem('selectedScheduleType') || '';
+                const distance = localStorage.getItem('selectedScheduleDistance') || '';
+                // 判斷是否為 Challenge Taiwan/226 或 Ironman/113
+                let raceDate = null;
+                if (type === 'Challenge Taiwan' && distance === '226') {
+                    raceDate = new Date(2026, 3, 25);
+                } else if (type === 'Ironman' && distance === '113') {
+                    raceDate = new Date(2025, 10, 2);
+                }
+                if (raceDate) {
+                    // 課表第一天 = 比賽日 - 236天
+                    const startDate = new Date(raceDate.getTime() - 236 * 24 * 60 * 60 * 1000);
+                    const now = new Date();
+                    if (now < startDate) {
+                        const diff = startDate - now;
+                        const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+                        return `課表尚未開始，距離開始還有 ${days} 天`;
+                    }
+                }
                 // 嘗試從 localStorage 取得 chat 頁寫入的今日課表
                 const todayScheduleFromChat = localStorage.getItem('todaySchedule');
                 if (todayScheduleFromChat) {
@@ -585,13 +598,15 @@
             document.getElementById('todayTraining').textContent = getTodayTraining();
             calculateWeeklyStats();
             // 設置當前頁面的導航按鈕為激活狀態
-            const currentPath = window.location.pathname.replace(/^\/+/, '');
             document.querySelectorAll('.nav-button').forEach(button => {
-                const href = button.getAttribute('href').replace(/^\/+/, '');
-                if (
-                    (href === 'index.html' && (currentPath === '' || currentPath.endsWith('index.html')))
-                    || (href !== 'index.html' && currentPath.endsWith(href))
-                ) {
+                const href = button.getAttribute('href');
+                if (!href) return;
+                let absHref = '';
+                try {
+                    absHref = new URL(href, location.origin + location.pathname).pathname.replace(/\/+/g, '/');
+                } catch(e) { absHref = href; }
+                let currentPath = location.pathname.replace(/\/+/g, '/');
+                if (absHref === currentPath || (absHref.endsWith('index.html') && (currentPath === '/' || currentPath.endsWith('index.html')))) {
                     button.classList.add('active');
                 } else {
                     button.classList.remove('active');
@@ -621,7 +636,7 @@
                 goals = goals.sort((a, b) => new Date(a.date) - new Date(b.date));
                 const list = document.getElementById('goalsList');
                 if (!goals.length) {
-                    list.innerHTML = '<div style="color:#b0bec5;">尚未設定目標賽事</div>';
+                    list.innerHTML = '<div style="color:#b0bec5;">尚未設定參加賽事</div>';
                     return;
                 }
                 list.innerHTML = goals.map((g, idx) => `
@@ -854,6 +869,25 @@
             const cancelScheduleBtn = document.getElementById('cancelScheduleBtn');
             const currentScheduleDiv = document.getElementById('currentScheduleDiv');
             const countdownInline = document.getElementById('countdownInline');
+
+            // 新增：根據課表類型動態更新距離選項
+            function updateDistanceOptions() {
+                const type = modalScheduleTypeSelect.value;
+                let options = '<option value="">請選擇距離</option>';
+                if (type === 'Challenge Taiwan') {
+                    options += '<option value="226">226</option>';
+                } else if (type === 'Ironman') {
+                    options += '<option value="113">113</option>';
+                }
+                modalDistanceSelect.innerHTML = options;
+                // 若目前選擇的距離不在新選項內，重設
+                if (![...modalDistanceSelect.options].some(opt => opt.value === modalDistanceSelect.value)) {
+                    modalDistanceSelect.value = '';
+                }
+            }
+            modalScheduleTypeSelect.addEventListener('change', updateDistanceOptions);
+            // 預設載入時也要呼叫一次
+            updateDistanceOptions();
 
             // 儲存已選擇課表到 localStorage
             function saveSelectedSchedule(type, distance) {

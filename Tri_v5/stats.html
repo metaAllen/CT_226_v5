@@ -193,7 +193,16 @@
             text-align: center;
             position: relative;
         }
-        .nav-button.active {
+        .nav-button span {
+            position: absolute;
+            bottom: 8px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: #fff;
+        }
+        .nav-button:hover span,
+        .nav-button.active span {
             color: #00bcd4;
         }
         .nav-button img {
@@ -226,18 +235,6 @@
             box-shadow: 0 6px 16px rgba(0,188,212,0.4),
                         inset 0 -2px 6px rgba(0,0,0,0.2),
                         inset 0 2px 6px rgba(255,255,255,0.2);
-        }
-        .nav-button span {
-            position: absolute;
-            bottom: 8px;
-            left: 0;
-            right: 0;
-            text-align: center;
-            color: #fff;
-        }
-        .nav-button:hover span,
-        .nav-button.active span {
-            color: #00bcd4;
         }
         .nav-button[href*="chat"] span {
             font-weight: 600;
@@ -380,8 +377,8 @@
         </div>
         <div class="nav-buttons">
             <a href="index.html" class="nav-button">
-                <img src="images/home.svg" alt="首頁">
-                <span>首頁</span>
+                <img src="images/home.svg" alt="主頁">
+                <span>主頁</span>
             </a>
             <a href="stats.html" class="nav-button active">
                 <img src="images/stats.svg" alt="統計">
@@ -592,13 +589,15 @@
             renderWeeklyAchievementCard();
 
             // 設置當前頁面的導航按鈕為激活狀態
-            const currentPath = window.location.pathname.replace(/^\/+/, '');
             document.querySelectorAll('.nav-button').forEach(button => {
-                const href = button.getAttribute('href').replace(/^\/+/, '');
-                if (
-                    (href === 'index.html' && (currentPath === '' || currentPath.endsWith('index.html')))
-                    || (href !== 'index.html' && currentPath.endsWith(href))
-                ) {
+                const href = button.getAttribute('href');
+                if (!href) return;
+                let absHref = '';
+                try {
+                    absHref = new URL(href, location.origin + location.pathname).pathname.replace(/\/+/g, '/');
+                } catch(e) { absHref = href; }
+                let currentPath = location.pathname.replace(/\/+/g, '/');
+                if (absHref === currentPath || (absHref.endsWith('index.html') && (currentPath === '/' || currentPath.endsWith('index.html')))) {
                     button.classList.add('active');
                 } else {
                     button.classList.remove('active');

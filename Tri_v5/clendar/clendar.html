@@ -44,7 +44,7 @@
       background: linear-gradient(90deg, #12214e 0%, #078282 100%);
       color: white;
       text-align: center;
-      padding: 18px 0 14px 0;
+      padding: 20px 0 16px 0;
       font-size: 22px;
       font-weight: bold;
       letter-spacing: 2px;
@@ -347,6 +347,8 @@
       right: 0;
       text-align: center;
       color: #fff;
+      font-weight: 600;
+      line-height: 1.5;
     }
     .nav-button:hover span,
     .nav-button.active span {
@@ -404,8 +406,8 @@
     </div>
     <div class="nav-buttons">
       <a href="../index.html" class="nav-button">
-        <img src="../images/home.svg" alt="首頁">
-        <span>首頁</span>
+        <img src="../images/home.svg" alt="主頁">
+        <span>主頁</span>
       </a>
       <a href="../stats.html" class="nav-button">
         <img src="../images/stats.svg" alt="統計">
@@ -723,13 +725,15 @@
       // checkLogin(); // 讓未登入者也能使用日曆
 
       // 設置當前頁面的導航按鈕為激活狀態
-      const currentPath = window.location.pathname.replace(/^\/+/, '');
       document.querySelectorAll('.nav-button').forEach(button => {
-        const href = button.getAttribute('href').replace(/^\/+/, '');
-        if (
-          (href === 'index.html' && (currentPath === '' || currentPath.endsWith('index.html')))
-          || (href !== 'index.html' && currentPath.endsWith(href))
-        ) {
+        const href = button.getAttribute('href');
+        if (!href) return;
+        let absHref = '';
+        try {
+          absHref = new URL(href, location.origin + location.pathname).pathname.replace(/\/+/g, '/');
+        } catch(e) { absHref = href; }
+        let currentPath = location.pathname.replace(/\/+/g, '/');
+        if (absHref === currentPath || (absHref.endsWith('index.html') && (currentPath === '/' || currentPath.endsWith('index.html')))) {
           button.classList.add('active');
         } else {
           button.classList.remove('active');

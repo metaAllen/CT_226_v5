@@ -377,8 +377,8 @@
         </div>
         <div class="nav-buttons">
             <a href="../index.html" class="nav-button">
-                <img src="../images/home.svg" alt="首頁">
-                <span>首頁</span>
+                <img src="../images/home.svg" alt="主頁">
+                <span>主頁</span>
             </a>
             <a href="../stats.html" class="nav-button">
                 <img src="../images/stats.svg" alt="統計">
@@ -953,6 +953,10 @@
                 messageDiv.textContent = messageText;
                 chatBox.appendChild(messageDiv);
                 chatBox.scrollTop = chatBox.scrollHeight;
+                // 彩蛋：當訊息包含「距離課表開始還有」時觸發彩蛋
+                if (typeof messageText === 'string' && messageText.includes('距離課表開始還有')) {
+                    if (window.__egg_check_message) window.__egg_check_message('距離課表開始還有');
+                }
             }
 
             // 修改 addMessageToChat 以觸發彩蛋（必須在 function 宣告之後）
@@ -1173,13 +1177,15 @@
             loadChatHistory();
 
             // 設置當前頁面的導航按鈕為激活狀態
-            const currentPath = window.location.pathname.replace(/^\/+/, '');
             document.querySelectorAll('.nav-button').forEach(button => {
-                const href = button.getAttribute('href').replace(/^\/+/, '');
-                if (
-                    (href === 'index.html' && (currentPath === '' || currentPath.endsWith('index.html')))
-                    || (href !== 'index.html' && currentPath.endsWith(href))
-                ) {
+                const href = button.getAttribute('href');
+                if (!href) return;
+                let absHref = '';
+                try {
+                    absHref = new URL(href, location.origin + location.pathname).pathname.replace(/\/+/g, '/');
+                } catch(e) { absHref = href; }
+                let currentPath = location.pathname.replace(/\/+/g, '/');
+                if (absHref === currentPath || (absHref.endsWith('index.html') && (currentPath === '/' || currentPath.endsWith('index.html')))) {
                     button.classList.add('active');
                 } else {
                     button.classList.remove('active');
@@ -1306,7 +1312,8 @@
                 const EGG_KEY = 'chat_v5_easter_eggs';
                 const EGG_MESSAGES = [
                     '你找的課表還在宇宙生成中🌌🌀～回首頁挑一個已經存在的課表吧🚀！',
-                    /辛苦啦～/
+                    /辛苦啦～/,
+                    /距離課表開始還有/
                 ];
                 let eggState = JSON.parse(localStorage.getItem(EGG_KEY) || '{}');
                 if (typeof eggState !== 'object' || !eggState) eggState = {};
@@ -1362,12 +1369,17 @@
                     function animate() {
                         ctx.clearRect(0,0,canvas.width,canvas.height);
                         if (isRocket) {
-                            document.getElementById('egg-rocket').style.display = 'block';
-                            document.getElementById('egg-popup-title').textContent = '彩蛋全收集！';
-                            document.getElementById('egg-popup-desc').textContent = '🚀 火箭升空！';
-                            document.getElementById('egg-popup').style.background = 'rgba(255,255,255,0.98)';
+                            var rocket = document.getElementById('egg-rocket');
+                            var popupTitle = document.getElementById('egg-popup-title');
+                            var popupDesc = document.getElementById('egg-popup-desc');
+                            var popup = document.getElementById('egg-popup');
+                            if (rocket) rocket.style.display = 'block';
+                            if (popupTitle) popupTitle.textContent = '彩蛋全收集！';
+                            if (popupDesc) popupDesc.textContent = '🚀 火箭升空！';
+                            if (popup) popup.style.background = 'rgba(255,255,255,0.98)';
                         } else {
-                            document.getElementById('egg-rocket').style.display = 'none';
+                            var rocket = document.getElementById('egg-rocket');
+                            if (rocket) rocket.style.display = 'none';
                             if (fireworkTimer++%10===0) createFirework();
                         }
                         particles.forEach(p => {
