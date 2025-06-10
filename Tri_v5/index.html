@@ -400,6 +400,7 @@
                             <option value="">請選擇課表</option>
                             <option value="Challenge Taiwan">Challenge Taiwan</option>
                             <option value="Ironman">Ironman</option>
+                            <option value="LAVA 完賽樂園">LAVA 完賽樂園</option>
                         </select>
                     </div>
                     <div>
@@ -440,6 +441,57 @@
     </div>
 
     <script>
+        const schedule_113 = [
+            // 第1週
+            { 'Monday': '休息日', 'Tuesday': '休息日', 'Wednesday': '騎25K (或訓練台50分)', 'Thursday': '跑6K', 'Friday': '游1K', 'Saturday': '騎40K (或訓練台80分)', 'Sunday': '跑10K' },
+            // 第2週
+            { 'Monday': '休息日', 'Tuesday': '游1K', 'Wednesday': '騎25K (或訓練台50分)', 'Thursday': '跑6K', 'Friday': '休息日', 'Saturday': '騎40K (或訓練台80分)', 'Sunday': '跑12K' },
+            // 第3週
+            { 'Monday': '休息日', 'Tuesday': '游1.5K', 'Wednesday': '騎30K (或訓練台60分)', 'Thursday': '跑8K', 'Friday': '休息日', 'Saturday': '騎45K (或訓練台90分)', 'Sunday': '跑12K' },
+            // 第4週
+            { 'Monday': '休息日', 'Tuesday': '休息日', 'Wednesday': '騎25K (或訓練台50分)', 'Thursday': '跑6K', 'Friday': '游1K', 'Saturday': '騎40K (或訓練台80分)', 'Sunday': '跑12K' },
+            // 第5週
+            { 'Monday': '休息日', 'Tuesday': '游1K', 'Wednesday': '騎30K (或訓練台60分)', 'Thursday': '跑8K', 'Friday': '休息日', 'Saturday': '騎45K (或訓練台90分)', 'Sunday': '跑12K' },
+            // 第6週
+            { 'Monday': '休息日', 'Tuesday': '游1K', 'Wednesday': '騎35K (或訓練台70分)', 'Thursday': '跑10K', 'Friday': '休息日', 'Saturday': '騎30K (或訓練台60分) + 跑6K', 'Sunday': '休息日' },
+            // 第7週
+            { 'Monday': '休息日', 'Tuesday': '騎35K (或訓練台70分)', 'Wednesday': '跑12K', 'Thursday': '游1.2K', 'Friday': '休息日', 'Saturday': '騎30K (或訓練台60分) + 跑8K', 'Sunday': '休息日' },
+            // 第8週
+            { 'Monday': '休息日', 'Tuesday': '騎30K (或訓練台60分)', 'Wednesday': '跑10K', 'Thursday': '休息日', 'Friday': '游1K', 'Saturday': '騎40K (或訓練台80分) + 跑6K', 'Sunday': '休息日' },
+            // 第9週
+            { 'Monday': '休息日', 'Tuesday': '騎30K (或訓練台60分)', 'Wednesday': '跑10K', 'Thursday': '休息日', 'Friday': '游1K', 'Saturday': '騎40K (或訓練台80分) + 跑8K', 'Sunday': '休息日' },
+            // 第10週
+            { 'Monday': '休息日', 'Tuesday': '游1K', 'Wednesday': '騎30K (或訓練台60分)', 'Thursday': '跑8K', 'Friday': '休息日', 'Saturday': '騎40K (或訓練台80分)', 'Sunday': '跑10K' },
+            // 第11週
+            { 'Monday': '休息日', 'Tuesday': '游1.2K', 'Wednesday': '騎35K (或訓練台70分)', 'Thursday': '跑10K', 'Friday': '休息日', 'Saturday': '騎45K (或訓練台90分)', 'Sunday': '跑12K' },
+            // 第12週
+            { 'Monday': '休息日', 'Tuesday': '游1.2K', 'Wednesday': '騎35K (或訓練台70分)', 'Thursday': '跑10K', 'Friday': '休息日', 'Saturday': '騎50K (或訓練台100分)', 'Sunday': '跑15K' },
+            // 第13週
+            { 'Monday': '休息日', 'Tuesday': '游1.5K', 'Wednesday': '騎35K (或訓練台70分)', 'Thursday': '跑10K', 'Friday': '休息日', 'Saturday': '騎70K (或訓練台140分)', 'Sunday': '跑18K' },
+            // 第14週
+            { 'Monday': '休息日', 'Tuesday': '游1.5K', 'Wednesday': '騎30K (或訓練台60分)', 'Thursday': '跑10K', 'Friday': '休息日', 'Saturday': '騎45K (或訓練台90分) + 跑5K', 'Sunday': '騎45K (或訓練台90分) + 跑5K' },
+            // 第15週
+            { 'Monday': '休息日', 'Tuesday': '游1.2K', 'Wednesday': '騎35K (或訓練台70分)', 'Thursday': '跑10K', 'Friday': '休息日', 'Saturday': '騎60K (或訓練台120分)', 'Sunday': '跑15K' },
+            // 第16週
+            { 'Monday': '休息日', 'Tuesday': '游1.5K', 'Wednesday': '騎40K (或訓練台80分)', 'Thursday': '跑12K', 'Friday': '休息日', 'Saturday': '騎70K (或訓練台140分)', 'Sunday': '跑18K' },
+            // 第17週
+            { 'Monday': '休息日', 'Tuesday': '游1.5K', 'Wednesday': '騎40K (或訓練台80分)', 'Thursday': '跑12K', 'Friday': '休息日', 'Saturday': '騎45K (或訓練台90分) + 跑7K', 'Sunday': '騎45K (或訓練台90分) + 跑7K' },
+            // 第18週
+            { 'Monday': '休息日', 'Tuesday': '游1.5K', 'Wednesday': '騎45K (或訓練台90分)', 'Thursday': '跑12K', 'Friday': '休息日', 'Saturday': '騎85K (或訓練台170分)', 'Sunday': '跑20K' },
+            // 第19週
+            { 'Monday': '休息日', 'Tuesday': '游1.5K', 'Wednesday': '騎45K (或訓練台90分)', 'Thursday': '跑12K', 'Friday': '休息日', 'Saturday': '騎90K (或訓練台180分)', 'Sunday': '跑20K' },
+            // 第20週
+            { 'Monday': '休息日', 'Tuesday': '游1.2K', 'Wednesday': '騎35K (或訓練台70分)', 'Thursday': '跑10K', 'Friday': '休息日', 'Saturday': '騎60K (或訓練台120分)', 'Sunday': '跑15K' },
+            // 第21週
+            { 'Monday': '休息日', 'Tuesday': '游1.2K', 'Wednesday': '騎40K (或訓練台80分)', 'Thursday': '跑12K', 'Friday': '休息日', 'Saturday': '騎65K (或訓練台130分) + 跑15K', 'Sunday': '休息日' },
+            // 第22週
+            { 'Monday': '休息日', 'Tuesday': '騎35K (或訓練台70分)', 'Wednesday': '跑12K', 'Thursday': '休息日', 'Friday': '游1.5K', 'Saturday': '騎85K (或訓練台170分) + 跑12K', 'Sunday': '休息日' },
+            // 第23週
+            { 'Monday': '休息日', 'Tuesday': '騎40K (或訓練台80分)', 'Wednesday': '跑10K', 'Thursday': '休息日', 'Friday': '游1.5K', 'Saturday': '騎55K (或訓練台110分) + 跑10K', 'Sunday': '休息日' },
+            // 第24週
+            { 'Monday': '游1K', 'Tuesday': '騎30K (或訓練台60分)', 'Wednesday': '跑8K（早上七點前完成）', 'Thursday': '休息日', 'Friday': '休息日', 'Saturday': '完賽樂園 113', 'Sunday': '休息日' }
+        ];
+
         document.addEventListener('DOMContentLoaded', () => {
             // ====== 本地資料變動時自動同步 ======
             function autoSyncPatch() {
@@ -878,9 +930,10 @@
                     options += '<option value="226">226</option>';
                 } else if (type === 'Ironman') {
                     options += '<option value="113">113</option>';
+                } else if (type === 'LAVA 完賽樂園') {
+                    options += '<option value="113">113</option>';
                 }
                 modalDistanceSelect.innerHTML = options;
-                // 若目前選擇的距離不在新選項內，重設
                 if (![...modalDistanceSelect.options].some(opt => opt.value === modalDistanceSelect.value)) {
                     modalDistanceSelect.value = '';
                 }
@@ -893,6 +946,15 @@
             function saveSelectedSchedule(type, distance) {
                 localStorage.setItem('selectedScheduleType', type);
                 localStorage.setItem('selectedScheduleDistance', distance);
+                if ((type === 'Ironman' && distance === '113') || (type === 'LAVA 完賽樂園' && distance === '113')) {
+                    localStorage.setItem('schedules', JSON.stringify(schedule_113));
+                } else if (type === 'Challenge Taiwan' && distance === '226') {
+                    if (typeof schedule_226 !== 'undefined') {
+                        localStorage.setItem('schedules', JSON.stringify(schedule_226));
+                    }
+                } else {
+                    localStorage.setItem('schedules', '[]');
+                }
             }
             // 顯示已選擇內容
             function renderCurrentSchedule() {
@@ -964,11 +1026,19 @@
             function renderCountdownInline() {
                 const selectedSchedule = localStorage.getItem('selectedScheduleType') || '';
                 const selectedDistance = localStorage.getItem('selectedScheduleDistance') || '';
-                let raceDate = null;
+                let raceDate = null, offsetDays = 236, scheduleLen = 34;
                 if(selectedSchedule==='Challenge Taiwan' && selectedDistance==='226') {
-                    raceDate = new Date(2026, 3, 25); // 4月是3
+                    raceDate = new Date(2026, 3, 25);
+                    offsetDays = 236;
+                    scheduleLen = 34;
                 } else if(selectedSchedule==='Ironman' && selectedDistance==='113') {
-                    raceDate = new Date(2025, 10, 2); // 11月是10
+                    raceDate = new Date(2025, 10, 2);
+                    offsetDays = 168;
+                    scheduleLen = schedule_113.length;
+                } else if(selectedSchedule==='LAVA 完賽樂園' && selectedDistance==='113') {
+                    raceDate = new Date(2026, 2, 14);
+                    offsetDays = 167;
+                    scheduleLen = schedule_113.length;
                 }
                 if(raceDate) {
                     countdownInline.style.display = '';
@@ -983,15 +1053,22 @@
             function updateCountdownInline() {
                 const selectedSchedule = localStorage.getItem('selectedScheduleType') || '';
                 const selectedDistance = localStorage.getItem('selectedScheduleDistance') || '';
-                let raceDate = null;
+                let raceDate = null, offsetDays = 236, scheduleLen = 34;
                 if(selectedSchedule==='Challenge Taiwan' && selectedDistance==='226') {
                     raceDate = new Date(2026, 3, 25, 0, 0, 0);
+                    offsetDays = 236;
+                    scheduleLen = 34;
                 } else if(selectedSchedule==='Ironman' && selectedDistance==='113') {
                     raceDate = new Date(2025, 10, 2, 0, 0, 0);
+                    offsetDays = 168;
+                    scheduleLen = schedule_113.length;
+                } else if(selectedSchedule==='LAVA 完賽樂園' && selectedDistance==='113') {
+                    raceDate = new Date(2026, 2, 14, 0, 0, 0);
+                    offsetDays = 167;
+                    scheduleLen = schedule_113.length;
                 }
                 if(!raceDate) return;
-                // 課表第一天 = 比賽日 - 236天
-                const startDate = new Date(raceDate.getTime() - 236 * 24 * 60 * 60 * 1000);
+                const startDate = new Date(raceDate.getTime() - offsetDays * 24 * 60 * 60 * 1000);
                 const now = new Date();
                 if(now < startDate) {
                     const diff = startDate - now;
@@ -999,14 +1076,48 @@
                     countdownInline.innerHTML = `<span style='font-size:40px;font-weight:900;color:#00bcd4;'>${days}</span><span style='font-size:20px;color:#b0bec5;font-weight:500;'> 天</span><div style='font-size:15px;color:#b0bec5;margin-top:2px;'>距離課表開始</div>`;
                     return;
                 }
-                // 課表已開始，顯示本週課表進度
-                const scheduleLen = 34; // schedule_226長度
                 const daysSinceStart = Math.floor((now - startDate)/(1000*60*60*24));
                 let weekIdx = Math.floor(daysSinceStart/7);
                 if(weekIdx >= scheduleLen) weekIdx = scheduleLen-1;
                 countdownInline.innerHTML = `<span style='font-size:22px;color:#00bcd4;font-weight:700;'>課表已開始！</span><div style='font-size:16px;color:#b0bec5;margin-top:6px;'>目前進度：第${weekIdx+1}週</div>`;
             }
             renderCurrentSchedule();
+
+            function getCurrentWeekIndexFixed() {
+                const type = localStorage.getItem('selectedScheduleType') || '';
+                const distance = localStorage.getItem('selectedScheduleDistance') || '';
+                let raceDate = null, offsetDays = 236;
+                if (type === 'Challenge Taiwan' && distance === '226') {
+                    raceDate = new Date(2026, 3, 25);
+                    offsetDays = 236;
+                } else if (type === 'Ironman' && distance === '113') {
+                    raceDate = new Date(2025, 10, 2);
+                    offsetDays = 168;
+                } else if (type === 'LAVA 完賽樂園' && distance === '113') {
+                    raceDate = new Date(2026, 2, 14);
+                    offsetDays = 167;
+                }
+                if (!raceDate) return 0;
+                const startDate = new Date(raceDate.getTime() - offsetDays * 24 * 60 * 60 * 1000);
+                const now = new Date();
+                if (now < startDate) return 0;
+                const daysSinceStart = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
+                const schedules = JSON.parse(localStorage.getItem('schedules') || '[]');
+                let weekIdx = Math.floor(daysSinceStart / 7);
+                if (weekIdx >= schedules.length) weekIdx = schedules.length - 1;
+                return weekIdx;
+            }
+            // 修改本週課表顯示邏輯，使用 getCurrentWeekIndexFixed
+            function getWeeklyScheduleFixed() {
+                const schedules = JSON.parse(localStorage.getItem('schedules') || '[]');
+                const weekIdx = getCurrentWeekIndexFixed();
+                const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+                if (!schedules[weekIdx]) return '本週課表無資料';
+                return daysOfWeek.map(day => `${day}: ${schedules[weekIdx][day] || 'No training'}`).join('\n');
+            }
+            // 你原本顯示本週課表的地方，請改用 getWeeklyScheduleFixed
+            // 例如：
+            document.getElementById('weeklySchedule').textContent = getWeeklyScheduleFixed();
         });
     </script>
 </body>

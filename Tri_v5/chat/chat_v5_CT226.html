@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>聊天 - 智能助手</title>
+    <title>線上課表_226</title>
     <style>
         html, body {
             height: 100%;
@@ -759,6 +759,58 @@
                 }
             ];
 
+            // schedule_113 內容
+            const schedule_113 = [
+                // 第1週
+                { 'Monday': '休息日', 'Tuesday': '休息日', 'Wednesday': '騎25K (或訓練台50分)', 'Thursday': '跑6K', 'Friday': '游1K', 'Saturday': '騎40K (或訓練台80分)', 'Sunday': '跑10K' },
+                // 第2週
+                { 'Monday': '休息日', 'Tuesday': '游1K', 'Wednesday': '騎25K (或訓練台50分)', 'Thursday': '跑6K', 'Friday': '休息日', 'Saturday': '騎40K (或訓練台80分)', 'Sunday': '跑12K' },
+                // 第3週
+                { 'Monday': '休息日', 'Tuesday': '游1.5K', 'Wednesday': '騎30K (或訓練台60分)', 'Thursday': '跑8K', 'Friday': '休息日', 'Saturday': '騎45K (或訓練台90分)', 'Sunday': '跑12K' },
+                // 第4週
+                { 'Monday': '休息日', 'Tuesday': '休息日', 'Wednesday': '騎25K (或訓練台50分)', 'Thursday': '跑6K', 'Friday': '游1K', 'Saturday': '騎40K (或訓練台80分)', 'Sunday': '跑12K' },
+                // 第5週
+                { 'Monday': '休息日', 'Tuesday': '游1K', 'Wednesday': '騎30K (或訓練台60分)', 'Thursday': '跑8K', 'Friday': '休息日', 'Saturday': '騎45K (或訓練台90分)', 'Sunday': '跑12K' },
+                // 第6週
+                { 'Monday': '休息日', 'Tuesday': '游1K', 'Wednesday': '騎35K (或訓練台70分)', 'Thursday': '跑10K', 'Friday': '休息日', 'Saturday': '騎30K (或訓練台60分) + 跑6K', 'Sunday': '休息日' },
+                // 第7週
+                { 'Monday': '休息日', 'Tuesday': '騎35K (或訓練台70分)', 'Wednesday': '跑12K', 'Thursday': '游1.2K', 'Friday': '休息日', 'Saturday': '騎30K (或訓練台60分) + 跑8K', 'Sunday': '休息日' },
+                // 第8週
+                { 'Monday': '休息日', 'Tuesday': '騎30K (或訓練台60分)', 'Wednesday': '跑10K', 'Thursday': '休息日', 'Friday': '游1K', 'Saturday': '騎40K (或訓練台80分) + 跑6K', 'Sunday': '休息日' },
+                // 第9週
+                { 'Monday': '休息日', 'Tuesday': '騎30K (或訓練台60分)', 'Wednesday': '跑10K', 'Thursday': '休息日', 'Friday': '游1K', 'Saturday': '騎40K (或訓練台80分) + 跑8K', 'Sunday': '休息日' },
+                // 第10週
+                { 'Monday': '休息日', 'Tuesday': '游1K', 'Wednesday': '騎30K (或訓練台60分)', 'Thursday': '跑8K', 'Friday': '休息日', 'Saturday': '騎40K (或訓練台80分)', 'Sunday': '跑10K' },
+                // 第11週
+                { 'Monday': '休息日', 'Tuesday': '游1.2K', 'Wednesday': '騎35K (或訓練台70分)', 'Thursday': '跑10K', 'Friday': '休息日', 'Saturday': '騎45K (或訓練台90分)', 'Sunday': '跑12K' },
+                // 第12週
+                { 'Monday': '休息日', 'Tuesday': '游1.2K', 'Wednesday': '騎35K (或訓練台70分)', 'Thursday': '跑10K', 'Friday': '休息日', 'Saturday': '騎50K (或訓練台100分)', 'Sunday': '跑15K' },
+                // 第13週
+                { 'Monday': '休息日', 'Tuesday': '游1.5K', 'Wednesday': '騎35K (或訓練台70分)', 'Thursday': '跑10K', 'Friday': '休息日', 'Saturday': '騎70K (或訓練台140分)', 'Sunday': '跑18K' },
+                // 第14週
+                { 'Monday': '休息日', 'Tuesday': '游1.5K', 'Wednesday': '騎30K (或訓練台60分)', 'Thursday': '跑10K', 'Friday': '休息日', 'Saturday': '騎45K (或訓練台90分) + 跑5K', 'Sunday': '騎45K (或訓練台90分) + 跑5K' },
+                // 第15週
+                { 'Monday': '休息日', 'Tuesday': '游1.2K', 'Wednesday': '騎35K (或訓練台70分)', 'Thursday': '跑10K', 'Friday': '休息日', 'Saturday': '騎60K (或訓練台120分)', 'Sunday': '跑15K' },
+                // 第16週
+                { 'Monday': '休息日', 'Tuesday': '游1.5K', 'Wednesday': '騎40K (或訓練台80分)', 'Thursday': '跑12K', 'Friday': '休息日', 'Saturday': '騎70K (或訓練台140分)', 'Sunday': '跑18K' },
+                // 第17週
+                { 'Monday': '休息日', 'Tuesday': '游1.5K', 'Wednesday': '騎40K (或訓練台80分)', 'Thursday': '跑12K', 'Friday': '休息日', 'Saturday': '騎45K (或訓練台90分) + 跑7K', 'Sunday': '騎45K (或訓練台90分) + 跑7K' },
+                // 第18週
+                { 'Monday': '休息日', 'Tuesday': '游1.5K', 'Wednesday': '騎45K (或訓練台90分)', 'Thursday': '跑12K', 'Friday': '休息日', 'Saturday': '騎85K (或訓練台170分)', 'Sunday': '跑20K' },
+                // 第19週
+                { 'Monday': '休息日', 'Tuesday': '游1.5K', 'Wednesday': '騎45K (或訓練台90分)', 'Thursday': '跑12K', 'Friday': '休息日', 'Saturday': '騎90K (或訓練台180分)', 'Sunday': '跑20K' },
+                // 第20週
+                { 'Monday': '休息日', 'Tuesday': '游1.2K', 'Wednesday': '騎35K (或訓練台70分)', 'Thursday': '跑10K', 'Friday': '休息日', 'Saturday': '騎60K (或訓練台120分)', 'Sunday': '跑15K' },
+                // 第21週
+                { 'Monday': '休息日', 'Tuesday': '游1.2K', 'Wednesday': '騎40K (或訓練台80分)', 'Thursday': '跑12K', 'Friday': '休息日', 'Saturday': '騎65K (或訓練台130分) + 跑15K', 'Sunday': '休息日' },
+                // 第22週
+                { 'Monday': '休息日', 'Tuesday': '騎35K (或訓練台70分)', 'Wednesday': '跑12K', 'Thursday': '休息日', 'Friday': '游1.5K', 'Saturday': '騎85K (或訓練台170分) + 跑12K', 'Sunday': '休息日' },
+                // 第23週
+                { 'Monday': '休息日', 'Tuesday': '騎40K (或訓練台80分)', 'Wednesday': '跑10K', 'Thursday': '休息日', 'Friday': '游1.5K', 'Saturday': '騎55K (或訓練台110分) + 跑10K', 'Sunday': '休息日' },
+                // 第24週
+                { 'Monday': '游1K', 'Tuesday': '騎30K (或訓練台60分)', 'Wednesday': '跑8K（早上七點前完成）', 'Thursday': '休息日', 'Friday': '休息日', 'Saturday': '完賽樂園 113', 'Sunday': '休息日' }
+            ];
+
             const dailyScheduleButton = document.getElementById('daily-schedule-button');
             const weeklyScheduleButton = document.getElementById('weekly-schedule-button');
             const swimmingButton = document.getElementById('swimming-button');
@@ -782,30 +834,53 @@
                 return userData;
             }
 
-            function getCurrentWeekIndex() {
-                const currentDate = new Date();
-                const startDate = new Date(currentDate.getFullYear(), 0, 1);
-                const days = Math.floor((currentDate - startDate) / (24 * 60 * 60 * 1000));
-                const weekNumber = Math.ceil((days + startDate.getDay() + 1) / 7);
-                return (weekNumber - 1) % schedule_226.length;
+            function getCurrentScheduleArray() {
+                const type = localStorage.getItem('selectedScheduleType') || '';
+                const distance = localStorage.getItem('selectedScheduleDistance') || '';
+                if (type === 'Challenge Taiwan' && distance === '226') {
+                    return schedule_226;
+                }
+                // 其它情況都用 localStorage.schedules
+                return JSON.parse(localStorage.getItem('schedules') || '[]');
+            }
+
+            function getCurrentWeekIndexFixed() {
+                const type = localStorage.getItem('selectedScheduleType') || '';
+                const distance = localStorage.getItem('selectedScheduleDistance') || '';
+                let raceDate = null;
+                let offsetDays = 236;
+                if (type === 'Challenge Taiwan' && distance === '226') {
+                    raceDate = new Date(2026, 3, 25);
+                    offsetDays = 236;
+                } else if (type === 'Ironman' && distance === '113') {
+                    raceDate = new Date(2025, 10, 2);
+                    offsetDays = 167;
+                }
+                if (!raceDate) return 0;
+                const startDate = new Date(raceDate.getTime() - offsetDays * 24 * 60 * 60 * 1000);
+                const now = new Date();
+                if (now < startDate) return 0;
+                const daysSinceStart = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
+                const schedules = getCurrentScheduleArray();
+                let weekIdx = Math.floor(daysSinceStart / 7);
+                if (weekIdx >= schedules.length) weekIdx = schedules.length - 1;
+                return weekIdx;
             }
 
             function getTodaySchedule() {
-                // 取得本週課表
-                const currentWeekIndex = getCurrentWeekIndex();
+                const currentWeekIndex = getCurrentWeekIndexFixed();
+                const schedules = getCurrentScheduleArray();
                 const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
                 const todayDate = new Date();
-                const todayIdx = todayDate.getDay() === 0 ? 6 : todayDate.getDay() - 1; // 0=Sunday
-                // 取得本週的日期字串
+                const todayIdx = todayDate.getDay() === 0 ? 6 : todayDate.getDay() - 1;
                 const weekStart = new Date(todayDate);
-                weekStart.setDate(todayDate.getDate() - todayDate.getDay() + 1); // 週一
+                weekStart.setDate(todayDate.getDate() - todayDate.getDay() + 1);
                 let weekDates = [];
                 for (let i = 0; i < 7; i++) {
                     const d = new Date(weekStart);
                     d.setDate(weekStart.getDate() + i);
                     weekDates.push(d);
                 }
-                // 取得calendarEvents
                 const currentUser = getCurrentUser();
                 let events;
                 if (currentUser) {
@@ -813,9 +888,7 @@
                 } else {
                     events = JSON.parse(localStorage.getItem('calendarEvents') || '{}');
                 }
-                // 先複製原始課表
-                let schedule = {...schedule_226[currentWeekIndex]};
-                // 先標記所有Event當天及前2天
+                let schedule = {...schedules[currentWeekIndex]};
                 let eventDays = [];
                 weekDates.forEach((date, idx) => {
                     const dateKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
@@ -824,7 +897,6 @@
                     }
                 });
                 if (eventDays.length > 0) {
-                    // 設定放假與Event顯示（連續Event不覆蓋Event當天）
                     eventDays.forEach(idx => {
                         for (let i = 1; i <= 2; i++) {
                             const restIdx = idx - i;
@@ -844,25 +916,23 @@
                         }
                     });
                 }
-                // 寫入 localStorage 供首頁同步
                 try { localStorage.setItem('todaySchedule', schedule[daysOfWeek[todayIdx]]); } catch(e){}
                 return schedule[daysOfWeek[todayIdx]] || 'No training today.';
             }
 
             function getWeeklySchedule() {
-                const currentWeekIndex = getCurrentWeekIndex();
+                const currentWeekIndex = getCurrentWeekIndexFixed();
+                const schedules = getCurrentScheduleArray();
                 const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-                // 取得本週的日期字串
                 const today = new Date();
                 const weekStart = new Date(today);
-                weekStart.setDate(today.getDate() - today.getDay() + 1); // 週一
+                weekStart.setDate(today.getDate() - today.getDay() + 1);
                 let weekDates = [];
                 for (let i = 0; i < 7; i++) {
                     const d = new Date(weekStart);
                     d.setDate(weekStart.getDate() + i);
                     weekDates.push(d);
                 }
-                // 取得calendarEvents
                 const currentUser = getCurrentUser();
                 let events;
                 if (currentUser) {
@@ -870,9 +940,7 @@
                 } else {
                     events = JSON.parse(localStorage.getItem('calendarEvents') || '{}');
                 }
-                // 先複製原始課表
-                let schedule = {...schedule_226[currentWeekIndex]};
-                // 先標記所有Event當天及前2天
+                let schedule = {...schedules[currentWeekIndex]};
                 let eventDays = [];
                 weekDates.forEach((date, idx) => {
                     const dateKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
@@ -881,25 +949,19 @@
                     }
                 });
                 if (eventDays.length === 0) {
-                    // 沒有任何Event，直接回傳原始課表
                     return daysOfWeek.map(day => `${day}: ${schedule[day] || 'No training'}`).join('\n');
                 }
-                // 設定放假與Event顯示（連續Event不覆蓋Event當天）
                 eventDays.forEach(idx => {
-                    // 前2天設為放假，但不覆蓋Event當天
                     for (let i = 1; i <= 2; i++) {
                         const restIdx = idx - i;
-                        // 若該天本來就是Event，不覆蓋
                         if (restIdx >= 0 && !eventDays.includes(restIdx)) {
                             schedule[daysOfWeek[restIdx]] = '放假';
                         }
                     }
-                    // 當天顯示賽事名稱 距離K（若有多個Event，顯示所有名稱與距離）
                     const date = weekDates[idx];
                     const dateKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
                     const eventList = (events[dateKey] || []).filter(ev => ev.type === 'Event');
                     if (eventList.length > 0) {
-                        // 顯示所有Event名稱與距離
                         schedule[daysOfWeek[idx]] = eventList.map(ev => {
                             let str = ev.name || '賽事';
                             if (ev.distance) str += ` ${ev.distance}K`;
@@ -1045,22 +1107,27 @@
                 // 取得首頁課表選擇狀態
                 const type = localStorage.getItem('selectedScheduleType') || '';
                 const distance = localStorage.getItem('selectedScheduleDistance') || '';
-                // 判斷是否為 Challenge Taiwan/226 或 Ironman/113
+                // 判斷是否為 Challenge Taiwan/226、Ironman/113、LAVA 完賽樂園/113
                 if (!type || !distance) return { status: 'not_selected' };
                 if (
                     (type === 'Challenge Taiwan' && distance === '226') ||
-                    (type === 'Ironman' && distance === '113')
+                    (type === 'Ironman' && distance === '113') ||
+                    (type === 'LAVA 完賽樂園' && distance === '113')
                 ) {
                     // 判斷是否倒數中
-                    let raceDate = null;
+                    let raceDate = null, offsetDays = 236;
                     if (type === 'Challenge Taiwan' && distance === '226') {
                         raceDate = new Date(2026, 3, 25);
+                        offsetDays = 236;
                     } else if (type === 'Ironman' && distance === '113') {
                         raceDate = new Date(2025, 10, 2);
+                        offsetDays = 168;
+                    } else if (type === 'LAVA 完賽樂園' && distance === '113') {
+                        raceDate = new Date(2026, 2, 14);
+                        offsetDays = 167;
                     }
                     if (raceDate) {
-                        const startDate = new Date(raceDate);
-                        startDate.setDate(raceDate.getDate() - 236);
+                        const startDate = new Date(raceDate.getTime() - offsetDays * 24 * 60 * 60 * 1000);
                         const now = new Date();
                         if (now < startDate) {
                             const diff = startDate - now;

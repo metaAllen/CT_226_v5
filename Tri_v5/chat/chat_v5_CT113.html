@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>線上課表_113</title>
+    <!-- ... existing code ... -->
+</head>
+<body>
+    <!-- ... existing code ... -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const chatBox = document.getElementById('chat-box');
+            const schedule_113 = [
+                // 第1週
+                { 'Monday': '休息日', 'Tuesday': '休息日', 'Wednesday': '騎 25K 或訓練台50分', 'Thursday': '跑 8K', 'Friday': '游 1K', 'Saturday': '騎 40K 或訓練台80分', 'Sunday': '跑 10K' },
+                // 第2週
+                { 'Monday': '休息日', 'Tuesday': '游 1K', 'Wednesday': '騎 25K 或訓練台50分', 'Thursday': '跑 8K', 'Friday': '休息日', 'Saturday': '騎 40K 或訓練台80分', 'Sunday': '跑 12K' },
+                // 第3週
+                { 'Monday': '休息日', 'Tuesday': '游 1.5K', 'Wednesday': '騎 30K 或訓練台60分', 'Thursday': '跑 8K', 'Friday': '休息日', 'Saturday': '騎 45K 或訓練台90分', 'Sunday': '跑 12K' },
+                // 第4週
+                { 'Monday': '休息日', 'Tuesday': '游 1K', 'Wednesday': '騎 25K 或訓練台50分', 'Thursday': '跑 8K', 'Friday': '游 1K', 'Saturday': '休息日', 'Sunday': '跑 15K' },
+                // 第5週
+                { 'Monday': '休息日', 'Tuesday': '游 1K', 'Wednesday': '騎 30K 或訓練台60分', 'Thursday': '跑 10K', 'Friday': '休息日', 'Saturday': '騎 45K 或訓練台90分', 'Sunday': '跑 12K' },
+                // 第6週
+                { 'Monday': '休息日', 'Tuesday': '游 1K', 'Wednesday': '騎 35K 或訓練台70分', 'Thursday': '跑 10K', 'Friday': '休息日', 'Saturday': '騎 30K 或訓練台60分 在跑 6K', 'Sunday': '休息日' },
+                // 第7週
+                { 'Monday': '休息日', 'Tuesday': '騎 35K 或訓練台70分', 'Wednesday': '跑 12K', 'Thursday': '游 1.2K', 'Friday': '休息日', 'Saturday': '騎 30K 或訓練台60分 在跑 8K', 'Sunday': '休息日' },
+                // 第8週
+                { 'Monday': '休息日', 'Tuesday': '騎 30K 或訓練台60分', 'Wednesday': '跑 10K', 'Thursday': '休息日', 'Friday': '游 1K', 'Saturday': '騎 40K 或訓練台80分 在跑 6K', 'Sunday': '休息日' },
+                // 第9週
+                { 'Monday': '休息日', 'Tuesday': '騎 30K 或訓練台60分', 'Wednesday': '跑 10K', 'Thursday': '休息日', 'Friday': '游 1K', 'Saturday': '騎 40K 或訓練台80分 在跑 8K', 'Sunday': '休息日' },
+                // 第10週
+                { 'Monday': '休息日', 'Tuesday': '游 1K', 'Wednesday': '騎 30K 或訓練台60分', 'Thursday': '跑 8K', 'Friday': '休息日', 'Saturday': '騎 40K 或訓練台80分', 'Sunday': '跑 10K' },
+                // 第11週
+                { 'Monday': '休息日', 'Tuesday': '游 1.2K', 'Wednesday': '騎 35K 或訓練台70分', 'Thursday': '跑 10K', 'Friday': '休息日', 'Saturday': '騎 45K 或訓練台90分', 'Sunday': '跑 12K' },
+                // 第12週
+                { 'Monday': '休息日', 'Tuesday': '游 1.2K', 'Wednesday': '騎 35K 或訓練台70分', 'Thursday': '跑 10K', 'Friday': '休息日', 'Saturday': '騎 50K 或訓練台100分', 'Sunday': '跑 15K' },
+                // 第13週
+                { 'Monday': '休息日', 'Tuesday': '游 1.5K', 'Wednesday': '騎 35K 或訓練台70分', 'Thursday': '跑 10K', 'Friday': '休息日', 'Saturday': '騎 70K 或訓練台140分', 'Sunday': '跑 18K' },
+                // 第14週
+                { 'Monday': '休息日', 'Tuesday': '游 1.5K', 'Wednesday': '騎 30K 或訓練台60分', 'Thursday': '跑 10K', 'Friday': '休息日', 'Saturday': '騎 45K 或訓練台90分 在跑 5K', 'Sunday': '騎 45K 或訓練台90分 在跑 5K' },
+                // 第15週
+                { 'Monday': '休息日', 'Tuesday': '游 1.2K', 'Wednesday': '騎 35K 或訓練台70分', 'Thursday': '跑 10K', 'Friday': '休息日', 'Saturday': '騎 60K 或訓練台120分', 'Sunday': '跑 15K' },
+                // 第16週
+                { 'Monday': '休息日', 'Tuesday': '游 1.5K', 'Wednesday': '騎 40K 或訓練台80分', 'Thursday': '跑 12K', 'Friday': '休息日', 'Saturday': '騎 70K 或訓練台140分', 'Sunday': '跑 18K' },
+                // 第17週
+                { 'Monday': '休息日', 'Tuesday': '游 1.5K', 'Wednesday': '騎 40K 或訓練台80分', 'Thursday': '跑 12K', 'Friday': '休息日', 'Saturday': '騎 45K 或訓練台90分 在跑 7K', 'Sunday': '騎 45K 或訓練台90分 在跑 7K' },
+                // 第18週
+                { 'Monday': '休息日', 'Tuesday': '游 1.5K', 'Wednesday': '騎 45K 或訓練台90分', 'Thursday': '跑 12K', 'Friday': '休息日', 'Saturday': '騎 85K 或訓練台170分', 'Sunday': '跑 20K' },
+                // 第19週
+                { 'Monday': '休息日', 'Tuesday': '游 1.5K', 'Wednesday': '騎 45K 或訓練台90分', 'Thursday': '跑 12K', 'Friday': '休息日', 'Saturday': '騎 90K 或訓練台180分', 'Sunday': '跑 20K' },
+                // 第20週
+                { 'Monday': '休息日', 'Tuesday': '游 1.2K', 'Wednesday': '騎 35K 或訓練台70分', 'Thursday': '跑 10K', 'Friday': '休息日', 'Saturday': '騎 60K 或訓練台120分', 'Sunday': '跑 15K' },
+                // 第21週
+                { 'Monday': '休息日', 'Tuesday': '游 1.2K', 'Wednesday': '騎 40K 或訓練台80分', 'Thursday': '跑 12K', 'Friday': '休息日', 'Saturday': '騎 65K 或訓練台130分 在跑 15K', 'Sunday': '休息日' },
+                // 第22週
+                { 'Monday': '休息日', 'Tuesday': '騎 35K 或訓練台70分', 'Wednesday': '跑 12K', 'Thursday': '休息日', 'Friday': '游 1.5K', 'Saturday': '騎 85K 或訓練台170分 在跑 12K', 'Sunday': '休息日' },
+                // 第23週
+                { 'Monday': '休息日', 'Tuesday': '騎 40K 或訓練台80分', 'Wednesday': '跑 10K', 'Thursday': '休息日', 'Friday': '游 1.5K', 'Saturday': '騎 55K 或訓練台110分 在跑 10K', 'Sunday': '休息日' },
+                // 第24週
+                { 'Monday': '游 1K', 'Tuesday': '騎 30K 或訓練台60分', 'Wednesday': '跑 8K（早上七點前要完成）', 'Thursday': '休息日', 'Friday': '休息日', 'Saturday': '完賽樂園 113', 'Sunday': '休息日' }
+            ];
+            // ... existing code ...
+            // Replace all schedule_226 references with schedule_113 in the script logic
+            // ... existing code ...
+        });
+    </script>
+    <!-- ... existing code ... -->
+</body>
+</html> 
