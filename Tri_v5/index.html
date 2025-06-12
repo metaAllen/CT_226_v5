@@ -344,6 +344,81 @@
                 border-radius: 0 0 18px 18px!important;
             }
         }
+        .level-card {
+            background: linear-gradient(135deg, #232526 0%, #414345 100%);
+            border-radius: 16px;
+            box-shadow: 0 4px 24px 0 rgba(0,188,212,0.18);
+            padding: 18px 16px 16px 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 60px;
+            animation: fadeInOpacity 0.4s cubic-bezier(.4,2,.6,1) both;
+            margin-bottom: 2px;
+            max-width: 350px;
+            width: 100%;
+            word-break: break-all;
+            box-sizing: border-box;
+        }
+        .level-icon {
+            font-size: 2.5rem;
+            margin-bottom: 6px;
+            filter: drop-shadow(0 2px 8px #00bcd4aa);
+        }
+        .level-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 6px;
+            text-align: center;
+            width: 100%;
+            /* 取消漸層色 */
+            background: none !important;
+            -webkit-background-clip: initial !important;
+            -webkit-text-fill-color: initial !important;
+            background-clip: initial !important;
+            color: inherit;
+        }
+        .level-shrimp .level-title {
+            color: #00bcd4 !important;
+        }
+        .level-duck .level-title {
+            color: #ffd600 !important;
+        }
+        .level-bird .level-title {
+            color: #FF69B4 !important;
+        }
+        .level-desc {
+            font-size: 0.95rem;
+            color: #e0e0e0;
+            text-align: center;
+            line-height: 1.7;
+            word-break: break-word;
+            width: 100%;
+            margin: 0 auto;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .level-shrimp {
+            border: 2px solid #39FF14;
+            box-shadow: 0 0 12px #39FF14aa;
+        }
+        .level-duck {
+            border: 2px solid #ffd600;
+            box-shadow: 0 0 12px #ffd60099;
+        }
+        .level-bird {
+            border: 2px solid #ff5252;
+            box-shadow: 0 0 12px #ff525299;
+        }
+        .level-bird .level-title {
+            color: #ff5252 !important;
+        }
+        @keyframes fadeInOpacity {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
     </style>
 </head>
 <body>
@@ -408,6 +483,16 @@
                         <select id="modalDistanceSelect" style="width:100%;padding:8px;border-radius:10px;border:1px solid #444;background:#333;color:#fff;margin-top:6px;">
                             <option value="">請選擇距離</option>
                         </select>
+                    </div>
+                    <div>
+                        <label for="modalLevelSelect" style="color:#b0bec5;font-size:15px;">課表等級</label>
+                        <select id="modalLevelSelect" style="width:100%;padding:8px;border-radius:10px;border:1px solid #444;background:#333;color:#fff;margin-top:6px;">
+                            <option value="">請選擇等級</option>
+                            <option value="軟腳蝦">軟腳蝦</option>
+                            <option value="滑水鴨">滑水鴨</option>
+                            <option value="老鳥">老鳥</option>
+                        </select>
+                        <div id="levelIntro" style="margin-top:8px;min-height:60px;"></div>
                     </div>
                     <div style="display:flex;gap:10px;justify-content:flex-end;">
                         <button type="button" id="cancelScheduleBtn" style="background:#888;color:#fff;border:none;padding:6px 16px;border-radius:6px;">取消</button>
@@ -921,6 +1006,42 @@
             const cancelScheduleBtn = document.getElementById('cancelScheduleBtn');
             const currentScheduleDiv = document.getElementById('currentScheduleDiv');
             const countdownInline = document.getElementById('countdownInline');
+            const modalLevelSelect = document.getElementById('modalLevelSelect');
+            const levelIntro = document.getElementById('levelIntro');
+            const levelIntroMap = {
+                '軟腳蝦': `
+                    <div class='level-card level-shrimp'>
+                        <div class='level-icon'><img src="images/shrimp.png" alt="軟腳蝦" style="width:48px;height:48px;object-fit:cover;border-radius:50%;background:#222;box-shadow:0 0 0 2px #fff;"></div>
+                        <div class='level-title' style="color:#39FF14;font-size:18px;font-weight:700;letter-spacing:2px;">軟腳蝦</div>
+                        <div class='level-desc'>泳帽戴反、呼吸換氣還會嗆到水<br>騎 10 公里開始懷疑坐墊是不是反人類設計<br>還剩 7 公里，開始每 500 公尺就想登出一次</div>
+                    </div>
+                `,
+                '滑水鴨': `
+                    <div class='level-card level-duck'>
+                        <div class='level-icon'><img src="images/duck.png" alt="滑水鴨" style="width:48px;height:48px;object-fit:cover;border-radius:50%;background:#222;box-shadow:0 0 0 2px #fff;"></div>
+                        <div class='level-title' style="color:#ffd600;font-size:18px;font-weight:700;letter-spacing:2px;">滑水鴨</div>
+                        <div class='level-desc'>會做暖身，會拉筋，下水還是先喝兩口 <br>騎車有速度感，但總在轉換區找不到單車<br>學會配速，大熱天就爆，太冷也爆，剛好也爆</div>
+                    </div>
+                `,
+                '老鳥': `
+                    <div class='level-card level-bird'>
+                        <div class='level-icon'><img src="images/eagle.png" alt="老鳥" style="width:48px;height:48px;object-fit:cover;border-radius:50%;background:#222;box-shadow:0 0 0 2px #fff;"></div>
+                        <div class='level-title' style="color:#ff5252;font-size:18px;font-weight:700;letter-spacing:2px;">老鳥</div>
+                        <div class='level-desc'>抬頭定位比 GPS 還準，還能幫隔壁選手導航<br>沒裝坐墊騎單車上武嶺<br>跑步跑錯路多繞一圈，結果還上凸台</div>
+                    </div>
+                `
+            };
+            if (modalLevelSelect) {
+                modalLevelSelect.addEventListener('change', function() {
+                    const val = modalLevelSelect.value;
+                    levelIntro.innerHTML = val ? (levelIntroMap[val] || '') : '';
+                });
+            }
+            // 載入時自動顯示已選等級介紹
+            if (modalLevelSelect && levelIntro) {
+                modalLevelSelect.value = localStorage.getItem('selectedScheduleLevel') || '';
+                levelIntro.innerHTML = modalLevelSelect.value ? (levelIntroMap[modalLevelSelect.value] || '') : '';
+            }
 
             // 新增：根據課表類型動態更新距離選項
             function updateDistanceOptions() {
@@ -934,18 +1055,17 @@
                     options += '<option value="113">113</option>';
                 }
                 modalDistanceSelect.innerHTML = options;
-                if (![...modalDistanceSelect.options].some(opt => opt.value === modalDistanceSelect.value)) {
-                    modalDistanceSelect.value = '';
-                }
+                modalDistanceSelect.value = '';
             }
             modalScheduleTypeSelect.addEventListener('change', updateDistanceOptions);
             // 預設載入時也要呼叫一次
             updateDistanceOptions();
 
             // 儲存已選擇課表到 localStorage
-            function saveSelectedSchedule(type, distance) {
+            function saveSelectedSchedule(type, distance, level) {
                 localStorage.setItem('selectedScheduleType', type);
                 localStorage.setItem('selectedScheduleDistance', distance);
+                localStorage.setItem('selectedScheduleLevel', level || '');
                 if ((type === 'Ironman' && distance === '113') || (type === 'LAVA 完賽樂園' && distance === '113')) {
                     localStorage.setItem('schedules', JSON.stringify(schedule_113));
                 } else if (type === 'Challenge Taiwan' && distance === '226') {
@@ -960,15 +1080,45 @@
             function renderCurrentSchedule() {
                 const selectedSchedule = localStorage.getItem('selectedScheduleType') || '';
                 const selectedDistance = localStorage.getItem('selectedScheduleDistance') || '';
+                const selectedLevel = localStorage.getItem('selectedScheduleLevel') || '';
+                let html = '';
                 if (selectedSchedule && selectedDistance) {
-                    currentScheduleDiv.innerHTML = `<span style='font-size:17px;color:#fff;'>已選擇:</span> <span style='font-size:17px;color:#00bcd4;font-weight:600;'>${selectedSchedule} / ${selectedDistance}</span>`;
+                    html = `<span style='font-size:17px;color:#fff;'>已選擇:</span> <span style='font-size:17px;color:#00bcd4;font-weight:600;'>${selectedSchedule} / ${selectedDistance}</span>`;
                 } else if (selectedSchedule) {
-                    currentScheduleDiv.innerHTML = `<span style='font-size:17px;color:#fff;'>已選擇:</span> <span style='font-size:17px;color:#00bcd4;font-weight:600;'>${selectedSchedule}</span>`;
+                    html = `<span style='font-size:17px;color:#fff;'>已選擇:</span> <span style='font-size:17px;color:#00bcd4;font-weight:600;'>${selectedSchedule}</span>`;
                 } else if (selectedDistance) {
-                    currentScheduleDiv.innerHTML = `<span style='font-size:17px;color:#fff;'>已選擇距離:</span> <span style='font-size:17px;color:#00bcd4;font-weight:600;'>${selectedDistance}</span>`;
+                    html = `<span style='font-size:17px;color:#fff;'>已選擇距離:</span> <span style='font-size:17px;color:#00bcd4;font-weight:600;'>${selectedDistance}</span>`;
                 } else {
-                    currentScheduleDiv.innerHTML = '<span style="font-size:17px;color:#fff;">尚未選擇課表</span>';
+                    html = '<span style="font-size:17px;color:#fff;">尚未選擇課表</span>';
                 }
+                if (selectedLevel) {
+                    let levelImg = '';
+                    let levelAlt = '';
+                    let levelColor = '';
+                    let levelShadow = '';
+                    if (selectedLevel === '軟腳蝦') {
+                        levelImg = 'images/shrimp.png';
+                        levelAlt = '軟腳蝦';
+                        levelColor = '#39FF14';
+                        levelShadow = '0 0 0 4px #fff';
+                    } else if (selectedLevel === '滑水鴨') {
+                        levelImg = 'images/duck.png';
+                        levelAlt = '滑水鴨';
+                        levelColor = '#ffd600';
+                        levelShadow = '0 0 0 4px #fff';
+                    } else if (selectedLevel === '老鳥') {
+                        levelImg = 'images/eagle.png';
+                        levelAlt = '老鳥';
+                        levelColor = '#ff5252';
+                        levelShadow = '0 2px 12px #ff525288,0 0 0 4px #fff';
+                    }
+                    html += `<div style='margin-top:10px;display:flex;flex-direction:column;align-items:center;gap:6px;'>
+                        <div style='color:#fff;font-size:13px;font-weight:600;margin-bottom:2px;'>課表等級</div>
+                        <img src='${levelImg}' alt='${levelAlt}' style='width:64px;height:64px;object-fit:cover;border-radius:50%;box-shadow:${levelShadow};background:#222;'/>
+                        <div style='font-size:15px;color:${levelColor};font-weight:600;letter-spacing:2px;'>${selectedLevel}</div>
+                    </div>`;
+                }
+                currentScheduleDiv.innerHTML = html;
                 renderCountdownInline();
             }
             // 開啟modal
@@ -977,7 +1127,10 @@
                 setTimeout(()=>{scheduleModal.style.opacity = 1;}, 10);
                 scheduleError.textContent = '';
                 modalScheduleTypeSelect.value = localStorage.getItem('selectedScheduleType') || '';
-                modalDistanceSelect.value = localStorage.getItem('selectedScheduleDistance') || '';
+                updateDistanceOptions();
+                modalDistanceSelect.value = '';
+                modalLevelSelect.value = '';
+                levelIntro.innerHTML = '';
                 modalScheduleTypeSelect.focus();
             }
             // 關閉modal
@@ -1007,6 +1160,7 @@
                     e.preventDefault();
                     const type = modalScheduleTypeSelect.value;
                     const distance = modalDistanceSelect.value;
+                    const level = modalLevelSelect.value;
                     if (!type) {
                         scheduleError.textContent = '請選擇課表';
                         modalScheduleTypeSelect.focus();
@@ -1017,7 +1171,12 @@
                         modalDistanceSelect.focus();
                         return;
                     }
-                    saveSelectedSchedule(type, distance);
+                    if (!level) {
+                        scheduleError.textContent = '請選擇課表等級';
+                        modalLevelSelect.focus();
+                        return;
+                    }
+                    saveSelectedSchedule(type, distance, level);
                     renderCurrentSchedule();
                     closeScheduleModal();
                 };
