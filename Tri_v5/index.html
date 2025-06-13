@@ -363,7 +363,8 @@
         .level-icon {
             font-size: 2.5rem;
             margin-bottom: 6px;
-            filter: drop-shadow(0 2px 8px #00bcd4aa);
+            /* 移除藍色發光 */
+            filter: none !important;
         }
         .level-title {
             font-size: 1.2rem;
@@ -401,8 +402,8 @@
             text-overflow: ellipsis;
         }
         .level-shrimp {
-            border: 2px solid #39FF14;
-            box-shadow: 0 0 12px #39FF14aa;
+            border: 2px solid #00bcd4;
+            box-shadow: 0 0 12px #00bcd4aa;
         }
         .level-duck {
             border: 2px solid #ffd600;
@@ -431,15 +432,15 @@
             </div>
             <div class="card">
                 <h2>目前課表</h2>
+                <button id="addScheduleBtn" style="background:#00bcd4;color:#fff;border:none;padding:10px 0;border-radius:14px;cursor:pointer;width:100%;display:block;margin:0 auto 12px auto;font-size:16px;font-weight:600;box-shadow:0 2px 8px rgba(0,188,212,0.08);transition:background 0.2s;">選擇課表</button>
                 <div class="goal-card" style="margin-bottom:0;">
-                    <button id="addScheduleBtn" style="background:#00bcd4;color:#fff;border:none;padding:10px 0;border-radius:14px;cursor:pointer;width:100%;font-size:16px;font-weight:600;box-shadow:0 2px 8px rgba(0,188,212,0.08);transition:background 0.2s;">選擇課表</button>
                     <div id="currentScheduleDiv" style="color:#b0bec5;font-size:15px;line-height:1.6;margin-top:10px;text-align:center;"></div>
                     <div id="countdownInline" style="font-size:32px;color:#00bcd4;font-weight:900;margin-top:18px;display:none;text-align:center;line-height:1.2;"></div>
                 </div>
             </div>
             <div class="card">
                 <h2>參加賽事</h2>
-                <button id="addGoalBtn" style="background:#00bcd4;color:#fff;border:none;padding:10px 0;border-radius:14px;cursor:pointer;width:100%;font-size:16px;font-weight:600;box-shadow:0 2px 8px rgba(0,188,212,0.08);transition:background 0.2s;margin-bottom:12px;">新增賽事</button>
+                <button id="addGoalBtn" style="background:#00bcd4;color:#fff;border:none;padding:10px 0;border-radius:14px;cursor:pointer;width:100%;display:block;margin:0 auto 12px auto;font-size:16px;font-weight:600;box-shadow:0 2px 8px rgba(0,188,212,0.08);transition:background 0.2s;">新增賽事</button>
                 <div id="goalsList">載入中...</div>
             </div>
             <!-- 目標編輯表單彈窗 -->
@@ -1011,21 +1012,21 @@
             const levelIntroMap = {
                 '軟腳蝦': `
                     <div class='level-card level-shrimp'>
-                        <div class='level-icon'><img src="images/shrimp.png" alt="軟腳蝦" style="width:48px;height:48px;object-fit:cover;border-radius:50%;background:#222;box-shadow:0 0 0 2px #fff;"></div>
-                        <div class='level-title' style="color:#39FF14;font-size:18px;font-weight:700;letter-spacing:2px;">軟腳蝦</div>
+                        <div class='level-icon'><img src="images/shrimp.png" alt="軟腳蝦" style="width:48px;height:48px;object-fit:cover;border-radius:50%;background:#222;box-shadow:0 2px 8px #00bcd4cc,0 0 0 2px #fff;"></div>
+                        <div class='level-title' style="color:#00bcd4;font-size:18px;font-weight:700;letter-spacing:2px;">軟腳蝦</div>
                         <div class='level-desc'>泳帽戴反、呼吸換氣還會嗆到水<br>騎 10 公里開始懷疑坐墊是不是反人類設計<br>還剩 7 公里，開始每 500 公尺就想登出一次</div>
                     </div>
                 `,
                 '滑水鴨': `
                     <div class='level-card level-duck'>
-                        <div class='level-icon'><img src="images/duck.png" alt="滑水鴨" style="width:48px;height:48px;object-fit:cover;border-radius:50%;background:#222;box-shadow:0 0 0 2px #fff;"></div>
+                        <div class='level-icon'><img src="images/duck.png" alt="滑水鴨" style="width:48px;height:48px;object-fit:cover;border-radius:50%;background:#222;box-shadow:0 2px 8px #ffd600cc,0 0 0 2px #fff;"></div>
                         <div class='level-title' style="color:#ffd600;font-size:18px;font-weight:700;letter-spacing:2px;">滑水鴨</div>
                         <div class='level-desc'>會做暖身，會拉筋，下水還是先喝兩口 <br>騎車有速度感，但總在轉換區找不到單車<br>學會配速，大熱天就爆，太冷也爆，剛好也爆</div>
                     </div>
                 `,
                 '老鳥': `
                     <div class='level-card level-bird'>
-                        <div class='level-icon'><img src="images/eagle.png" alt="老鳥" style="width:48px;height:48px;object-fit:cover;border-radius:50%;background:#222;box-shadow:0 0 0 2px #fff;"></div>
+                        <div class='level-icon'><img src="images/eagle.png" alt="老鳥" style="width:48px;height:48px;object-fit:cover;border-radius:50%;background:#222;box-shadow:0 2px 8px #ff5252cc,0 0 0 2px #fff;"></div>
                         <div class='level-title' style="color:#ff5252;font-size:18px;font-weight:700;letter-spacing:2px;">老鳥</div>
                         <div class='level-desc'>抬頭定位比 GPS 還準，還能幫隔壁選手導航<br>沒裝坐墊騎單車上武嶺<br>跑步跑錯路多繞一圈，結果還上凸台</div>
                     </div>
@@ -1099,18 +1100,18 @@
                     if (selectedLevel === '軟腳蝦') {
                         levelImg = 'images/shrimp.png';
                         levelAlt = '軟腳蝦';
-                        levelColor = '#39FF14';
-                        levelShadow = '0 0 0 4px #fff';
+                        levelColor = '#00bcd4';
+                        levelShadow = '0 2px 8px #00bcd4cc,0 0 0 4px #fff';
                     } else if (selectedLevel === '滑水鴨') {
                         levelImg = 'images/duck.png';
                         levelAlt = '滑水鴨';
                         levelColor = '#ffd600';
-                        levelShadow = '0 0 0 4px #fff';
+                        levelShadow = '0 2px 8px #ffd600cc,0 0 0 4px #fff';
                     } else if (selectedLevel === '老鳥') {
                         levelImg = 'images/eagle.png';
                         levelAlt = '老鳥';
                         levelColor = '#ff5252';
-                        levelShadow = '0 2px 12px #ff525288,0 0 0 4px #fff';
+                        levelShadow = '0 2px 8px #ff5252cc,0 0 0 4px #fff';
                     }
                     html += `<div style='margin-top:10px;display:flex;flex-direction:column;align-items:center;gap:6px;'>
                         <div style='color:#fff;font-size:13px;font-weight:600;margin-bottom:2px;'>課表等級</div>

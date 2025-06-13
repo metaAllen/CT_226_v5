@@ -177,6 +177,8 @@
     .modal-content input,
     .modal-content select {
       width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
       padding: 10px 12px;
       border-radius: 8px;
       border: none;
@@ -218,11 +220,57 @@
       transform: scale(1.05);
     }
     #syncGarmin {
-      background: linear-gradient(90deg, #007bff 0%, #12214e 100%);
-      color: white;
+      width: 36px;
+      height: 36px;
+      min-width: 36px;
+      max-width: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #00bcd4 0%, #2196f3 100%);
+      color: #fff;
+      font-size: 20px;
+      font-weight: bold;
+      border: none;
+      box-shadow: 0 2px 8px rgba(0,188,212,0.10);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: width 0.25s, max-width 0.25s, min-width 0.25s, background 0.3s, border-radius 0.3s, font-size 0.2s, box-shadow 0.3s;
+      overflow: hidden;
+      position: relative;
+      padding: 0;
     }
     #syncGarmin:hover {
-      background: linear-gradient(90deg, #12214e 0%, #007bff 100%);
+      width: 120px;
+      min-width: 36px;
+      max-width: 120px;
+      border-radius: 18px;
+      background: linear-gradient(90deg, #007bff 0%, #12214e 100%);
+      font-size: 20px;
+      box-shadow: 0 4px 16px rgba(0,188,212,0.18);
+    }
+    #syncGarmin span {
+      display: inline-block;
+      white-space: nowrap;
+      transition: opacity 0.2s, max-width 0.3s, margin-left 0.2s;
+      margin-left: 0;
+      font-size: 15px;
+      font-weight: 500;
+    }
+    #syncGarmin span:last-child {
+      opacity: 0;
+      max-width: 0;
+    }
+    #syncGarmin:hover span:last-child {
+      opacity: 1;
+      max-width: 90px;
+      margin-left: 8px;
+    }
+    #syncGarmin span:first-child {
+      opacity: 1;
+      transition: opacity 0.2s;
+    }
+    #syncGarmin:hover span:first-child {
+      opacity: 1;
     }
     @media (max-width: 600px) {
       .calendar-container {
@@ -251,34 +299,21 @@
     .calendar-actions {
       width: 100%;
       display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 0 12px;
+      justify-content: center;
+      align-items: center;
+      gap: 0;
+      padding: 0;
       background: transparent;
       box-sizing: border-box;
-      position: fixed;
-      bottom: 100px;
+      position: absolute;
       left: 0;
       right: 0;
+      bottom: 32px;
       z-index: 1000;
+      pointer-events: none;
     }
-    .calendar-actions button {
-      flex: 1 1 0;
-      background: linear-gradient(90deg, #12214e 0%, #078282 100%);
-      border: none;
-      padding: 15px 0;
-      font-size: 16px;
-      cursor: pointer;
-      border-radius: 10px;
-      color: white;
-      font-weight: bold;
-      box-shadow: 0 2px 8px rgba(0,188,212,0.10);
-      transition: background 0.3s, transform 0.2s;
-      margin: 0;
-    }
-    .calendar-actions button:hover {
-      background: linear-gradient(90deg, #078282 0%, #12214e 100%);
-      transform: translateY(-2px) scale(1.04);
+    .calendar-actions #syncGarmin {
+      pointer-events: auto;
     }
     .nav-buttons {
       position: absolute;
@@ -341,15 +376,13 @@
                   inset 0 2px 6px rgba(255,255,255,0.2);
     }
     .nav-button span {
-      position: absolute;
-      bottom: 8px;
-      left: 0;
-      right: 0;
-      text-align: center;
-      color: #fff;
-      font-weight: 600;
-      line-height: 1.5;
-    }
+            position: absolute;
+            bottom: 8px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: #fff;
+        }
     .nav-button:hover span,
     .nav-button.active span {
       color: #00bcd4;
@@ -391,18 +424,81 @@
       scrollbar-width: thin;
       scrollbar-color: rgba(0,188,212,0.3) rgba(255,255,255,0.05);
     }
+    .header button#prevMonth, .header button#nextMonth {
+      width: 36px;
+      height: 36px;
+      min-width: 36px;
+      min-height: 36px;
+      max-width: 40px;
+      max-height: 40px;
+      border-radius: 10px;
+      font-size: 18px;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(90deg, #12214e 0%, #078282 100%);
+      color: #fff;
+      border: none;
+      box-shadow: 0 2px 8px rgba(0,188,212,0.10);
+      transition: background 0.3s, transform 0.2s;
+    }
+    .header button#prevMonth:hover, .header button#nextMonth:hover {
+      background: linear-gradient(90deg, #078282 0%, #12214e 100%);
+      transform: scale(1.12);
+    }
+    .header button#prevMonth::after {
+      content: '<';
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .header button#nextMonth::after {
+      content: '>';
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .header button#prevMonth, .header button#nextMonth {
+      font-size: 0; /* 隱藏原本文字 */
+    }
+    .garmin-fab {
+      position: absolute;
+      right: 12px;
+      bottom: 100px;
+      z-index: 1100;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      pointer-events: auto;
+    }
+    .modal-content .buttons button {
+      background: #00bcd4 !important;
+      color: #fff !important;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      box-shadow: 0 2px 8px rgba(0,188,212,0.10);
+      transition: background 0.2s, transform 0.2s;
+    }
+    .modal-content .buttons button:hover {
+      background: #0097a7 !important;
+      color: #fff !important;
+      transform: scale(1.04);
+    }
   </style>
 </head>
 <body>
   <div class="calendar-container" style="position:relative;">
-    <div class="header" style="position:relative;">
-      <span style="display:block; width:100%; text-align:center; font-size:22px; font-weight:bold; letter-spacing:2px;" id="monthYear"></span>
+    <div class="header" style="position:relative; display:flex; align-items:center; justify-content:space-between; gap:12px;">
+      <button id="prevMonth" style="min-width:44px;">上個月</button>
+      <span style="display:block; flex:1; text-align:center; font-size:22px; font-weight:bold; letter-spacing:2px;" id="monthYear"></span>
+      <button id="nextMonth" style="min-width:44px;">下個月</button>
+    </div>
+    <div id="weekday-labels" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;padding:0 12px 6px 12px;width:100%;box-sizing:border-box;font-size:15px;font-weight:bold;color:#00bcd4;text-align:center;">
+      <div>一</div><div>二</div><div>三</div><div>四</div><div>五</div><div>六</div><div>日</div>
     </div>
     <div class="calendar" id="calendar"></div>
-    <div class="calendar-actions">
-      <button id="prevMonth">上個月</button>
-      <button id="syncGarmin">同步 Garmin</button>
-      <button id="nextMonth">下個月</button>
+    <div class="garmin-fab">
+      <button id="syncGarmin"><span style="font-size:20px;font-weight:bold;">G</span><span>同步 Garmin</span></button>
     </div>
     <div class="nav-buttons">
       <a href="../index.html" class="nav-button">
@@ -709,15 +805,6 @@
       deleteActivity.addEventListener('click', deleteEvent);
       closeModal.addEventListener('click', () => modal.classList.add('hidden'));
 
-      // Garmin 同步功能
-      syncGarmin.addEventListener('click', async () => {
-        try {
-          alert('哎呀～這功能需要 Garmin API 魔法生成的啦🧙‍♂️✨');
-        } catch (error) {
-          alert('同步失敗: ' + error.message);
-        }
-      });
-
       // 初始化日曆
       renderCalendar();
 
@@ -862,6 +949,40 @@
           syncFromCloud();
         }, 10000); // 每 10 秒自動同步一次
       }
+
+      // Garmin 同步功能
+      syncGarmin.addEventListener('click', async () => {
+        alert('哎呀～這功能需要 Garmin API 魔法生成的啦🧙‍♂️✨');
+      });
+
+      // 手機滑動切換月份
+      let touchStartX = 0;
+      let touchEndX = 0;
+      const calendarContainer = document.querySelector('.calendar-container');
+      calendarContainer.addEventListener('touchstart', function(e) {
+        if (e.touches.length === 1) {
+          touchStartX = e.touches[0].clientX;
+        }
+      });
+      calendarContainer.addEventListener('touchmove', function(e) {
+        if (e.touches.length === 1) {
+          touchEndX = e.touches[0].clientX;
+        }
+      });
+      calendarContainer.addEventListener('touchend', function(e) {
+        const deltaX = touchEndX - touchStartX;
+        if (Math.abs(deltaX) > 50) {
+          if (deltaX < 0) {
+            // 向左滑，下一個月
+            nextMonth.click();
+          } else {
+            // 向右滑，上個月
+            prevMonth.click();
+          }
+        }
+        touchStartX = 0;
+        touchEndX = 0;
+      });
     });
   </script>
 </body>
