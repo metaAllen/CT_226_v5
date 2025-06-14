@@ -437,14 +437,14 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(90deg, #12214e 0%, #078282 100%);
+      background: transparent;
       color: #fff;
       border: none;
-      box-shadow: 0 2px 8px rgba(0,188,212,0.10);
-      transition: background 0.3s, transform 0.2s;
+      box-shadow: none;
+      transition: transform 0.2s;
     }
     .header button#prevMonth:hover, .header button#nextMonth:hover {
-      background: linear-gradient(90deg, #078282 0%, #12214e 100%);
+      background: transparent;
       transform: scale(1.12);
     }
     .header button#prevMonth::after {
@@ -953,20 +953,30 @@
       // 手機滑動切換月份
       let touchStartX = 0;
       let touchEndX = 0;
+      let touchStartY = 0;
+      let touchEndY = 0;
       const calendarContainer = document.querySelector('.calendar-container');
+      
       calendarContainer.addEventListener('touchstart', function(e) {
         if (e.touches.length === 1) {
           touchStartX = e.touches[0].clientX;
+          touchStartY = e.touches[0].clientY;
         }
       });
+      
       calendarContainer.addEventListener('touchmove', function(e) {
         if (e.touches.length === 1) {
           touchEndX = e.touches[0].clientX;
+          touchEndY = e.touches[0].clientY;
         }
       });
+      
       calendarContainer.addEventListener('touchend', function(e) {
         const deltaX = touchEndX - touchStartX;
-        if (Math.abs(deltaX) > 50) {
+        const deltaY = touchEndY - touchStartY;
+        
+        // 只有當水平滑動距離大於垂直滑動距離，且水平滑動距離大於 50px 時才切換月份
+        if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
           if (deltaX < 0) {
             // 向左滑，下一個月
             nextMonth.click();
@@ -975,8 +985,12 @@
             prevMonth.click();
           }
         }
+        
+        // 重置觸控位置
         touchStartX = 0;
         touchEndX = 0;
+        touchStartY = 0;
+        touchEndY = 0;
       });
 
       // Garmin 同步功能
