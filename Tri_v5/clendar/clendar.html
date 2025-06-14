@@ -494,7 +494,7 @@
       <button id="nextMonth" style="min-width:44px;">下個月</button>
     </div>
     <div id="weekday-labels" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;padding:0 12px 6px 12px;width:100%;box-sizing:border-box;font-size:15px;font-weight:bold;color:#00bcd4;text-align:center;">
-      <div>一</div><div>二</div><div>三</div><div>四</div><div>五</div><div>六</div><div>日</div>
+      <div>日</div><div>一</div><div>二</div><div>三</div><div>四</div><div>五</div><div>六</div>
     </div>
     <div class="calendar" id="calendar"></div>
     <div class="garmin-fab">
@@ -950,11 +950,6 @@
         }, 10000); // 每 10 秒自動同步一次
       }
 
-      // Garmin 同步功能
-      syncGarmin.addEventListener('click', async () => {
-        alert('哎呀～這功能需要 Garmin API 魔法生成的啦🧙‍♂️✨');
-      });
-
       // 手機滑動切換月份
       let touchStartX = 0;
       let touchEndX = 0;
@@ -982,6 +977,52 @@
         }
         touchStartX = 0;
         touchEndX = 0;
+      });
+
+      // Garmin 同步功能
+      syncGarmin.addEventListener('click', async () => {
+        // 展開按鈕並保持展開狀態
+        syncGarmin.style.width = '120px';
+        syncGarmin.style.minWidth = '36px';
+        syncGarmin.style.maxWidth = '120px';
+        syncGarmin.style.borderRadius = '18px';
+        syncGarmin.style.background = 'linear-gradient(90deg, #007bff 0%, #12214e 100%)';
+        syncGarmin.style.fontSize = '20px';
+        syncGarmin.style.boxShadow = '0 4px 16px rgba(0,188,212,0.18)';
+        
+        // 顯示文字
+        const span = syncGarmin.querySelector('span:last-child');
+        if (span) {
+          span.style.opacity = '1';
+          span.style.maxWidth = '90px';
+          span.style.marginLeft = '8px';
+        }
+        
+        // 延遲顯示提示訊息
+        setTimeout(() => {
+          alert('哎呀～這功能需要 Garmin API 魔法生成的啦🧙‍♂️✨');
+        }, 300);
+      });
+
+      // 在頁面載入時重置 G 按鈕狀態
+      window.addEventListener('pageshow', function(event) {
+        if (event.persisted) {
+          syncGarmin.style.width = '36px';
+          syncGarmin.style.minWidth = '36px';
+          syncGarmin.style.maxWidth = '36px';
+          syncGarmin.style.borderRadius = '50%';
+          syncGarmin.style.background = 'linear-gradient(135deg, #00bcd4 0%, #2196f3 100%)';
+          syncGarmin.style.fontSize = '20px';
+          syncGarmin.style.boxShadow = '0 2px 8px rgba(0,188,212,0.10)';
+          
+          // 隱藏文字
+          const span = syncGarmin.querySelector('span:last-child');
+          if (span) {
+            span.style.opacity = '0';
+            span.style.maxWidth = '0';
+            span.style.marginLeft = '0';
+          }
+        }
       });
     });
   </script>
